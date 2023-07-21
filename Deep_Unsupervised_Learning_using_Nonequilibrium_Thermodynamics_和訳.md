@@ -35,7 +35,7 @@
   - [B.1 $p(X^{(T)})$ のエントロピー](#b1-pxt-のエントロピー)
   - [B.2 $t=0$ におけるエッジ効果の除去](#b2-t0-におけるエッジ効果の除去)
   - [B.3 事後 $q(x^{(t-1)}|x^{(0)})$ で書き換える](#b3-事後-qxt-1x0-で書き換える)
-  - [B.4 KL発散とエントロピーで書き直す](#b4-kl発散とエントロピーで書き直す)
+  - [B.4 KLダイバージェンスとエントロピーで書き直す](#b4-klダイバージェンスとエントロピーで書き直す)
 - [C 摂動ガウス遷移](#c-摂動ガウス遷移)
 - [D 実験内容](#d-実験内容)
   - [D.1 玩具問題](#d1-玩具問題)
@@ -154,7 +154,7 @@ L&=\int dx^{(0)}q\left(x^{(0)}\right)\log p\left(x^{(0)}\right)\tag{10}\\
 
 $$L\geq\int dx^{(0\cdots T)}q\left(x^{(0\cdots T)}\right)\log\left[p\left(x^{(T)}\right)\prod^T_{t=1}\frac{p\left(x^{(t-1)}|x^{(t)}\right)}{q\left(x^{(t)}|x^{(t-1)}\right)}\right]\tag{12}$$
 
-によって下界が与えられる。[付録B](#b-対数尤度の下界)にあるように、我々の拡散軌道では、エントロピーとKL発散が解析的に計算できる
+によって下界が与えられる。[付録B](#b-対数尤度の下界)にあるように、我々の拡散軌道では、エントロピーとKLダイバージェンスが解析的に計算できる
 
 $$\begin{align*}
 L&\geq K\tag{13}\\
@@ -323,15 +323,101 @@ $$H_q\left(X^{(t)}|X^{(t-1)}\right)\geq H_q\left(X^{(t-1)}X^{(t)}\right)\geq H_q
 
 ## B 対数尤度の下界
 
+対数尤度の下界は以下の式で表される。
+
+$$\begin{align*}
+L\geq&K\tag{37}\\
+K=&\int dx^{(0\cdots T)}q\left(x^{(0\cdots T)}\right)\log\left[p\left(x^{(T)}\right)\prod^{T}_{t=1}\frac{p\left(x^{(t-1)}|x^{(t)}\right)}{q\left(x^{(t)}|x^{(t-1)}\right)}\right]\tag{38}\\
+\end{align*}$$
+
 ### B.1 $p(X^{(T)})$ のエントロピー
+
+$p\left(X^{(T)}\right)$ からの寄与を取り除き、エントロピーとして書き直すことができる。
+
+$$\begin{align*}
+K=&\int dx^{(0\cdots T)}q\left(x^{(0\cdots T)}\right)\sum^T_{t=1}\log\left[\frac{p\left(x^{(t-1)}|x^{(t)}\right)}{q\left(x^{(T)}|x^{(t-1)}\right)}\right]+\int dx^{(T)}q\left(x^{(T)}\right)\log p\left(x^{(T)}\right)\tag{39}\\
+=&\int dx^{(0\cdots T)}q\left(x^{(0\cdots T)}\right)\sum^T_{t=1}\log\left[\frac{p\left(x^{(t-1)}|x^{(t)}\right)}{q\left(x^{(T)}|x^{(t-1)}\right)}\right]+\int dx^{(T)}q\left(x^{(T)}\right)\log\pi\left(x^{T}\right)\tag{40}\\
+\end{align*}$$
+
+設計上、$\pi\left(x^{(t)}\right)$ に対するクロスエントロピーは拡散カーネルの下では一定であり、$p\left(x^{(T)}\right)$ のエントロピーに等しい。したがって、以下のようになる。
+
+$$K=\sum^{T}_{t=1}\int dx^{(0\cdots T)}q\left(x^{(0\cdots T)}\right)\log\left[\frac{p\left(x^{(t-1)}|x^{(t)}\right)}{q\left(x^{(t)}|x^{(t-1)}\right)}\right]-H_p\left(x^{(T)}\right)\tag{41}$$
 
 ### B.2 $t=0$ におけるエッジ効果の除去
 
+エッジ効果を避けるため、逆方向の軌跡の最終ステップは、対応する順方向の拡散ステップと同じになるように以下のように設定した。
+
+$$p\left(x^{(0)}|x^{(1)}\right)=q\left(x^{(1)}|x^{(0)}\right)\frac{\pi\left(x^{(0)}\right)}{\pi\left(x^{(1)}\right)}=T_\pi\left(x^{(0)}|x^{(1)};\beta_1\right)\tag{42}$$
+
+次に、この等価性を利用して、和の最初の時間ステップである
+
+$$\begin{align*}
+K=&\sum^{T}_{t=2}\int dx^{(0\cdots T)}q\left(x^{(0\cdots T)}\right)\log\left[\frac{p\left(x^{(t-1)}|x^{(t)}\right)}{q\left(x^{(t)}|x^{(t-1)}\right)}\right]+\int dx^{(0)}dx^{(1)}q\left(x^{(0)},x^{(1)}\right)\log\left[\frac{q\left(x^{(1)}|x^{(0)}\right)\pi\left(x^{(0)}\right)}{q\left(x^{(1)}|x^{(0)}\right)\pi\left(x^{(1)}\right)}\right]-H_p\left(X^{(T)}\right)\tag{43}\\
+=&\sum^{T}_{t=2}\int dx^{(0\cdots T)}q\left(x^{(0\cdots T)}\right)\log\left[\frac{p\left(x^{(t-1)}|x^{(t)}\right)}{q\left(x^{(t)}|x^{(t-1)}\right)}\right]-H_p\left(x^{(T)}\right)\tag{44}\\
+\end{align*}$$
+
+の寄与を除去する。ここで再び、設計によって、$-\int dx^{(t)}q\left(x^{(t)}\right)\log\pi\left(x^{(t)}\right)=H_p(X^{(T)})$ がすべての $t$ に対して定数であるという事実を利用した。
+
 ### B.3 事後 $q(x^{(t-1)}|x^{(0)})$ で書き換える
 
-### B.4 KL発散とエントロピーで書き直す
+前進軌道はマルコフ過程のため、以下のようになる。
+
+$$K=\sum^{T}_{t=2}\int dx^{(0\cdots T)}q\left(x^{(0\cdots T)}\right)\log\left[\frac{p\left(x^{(t-1)}|x^{(t)}\right)}{q\left(x^{(t)}|x^{(t-1)},x^{(0)}\right)}\right]-H_p\left(X^{(T)}\right)\tag{45}$$
+
+ベイズの法則を使えば、これを事後値と前方軌道からのマージナルで書き直すことができる。
+
+$$K=\sum^{T}_{t=2}\int dx^{(0\cdots T)}q\left(x^{(0\cdots T)}\right)\log\left[\frac{p\left(x^{(t-1)}|x^{(t)}\right)}{q\left(x^{(t-1)}|x^{(t)},x^{(0)}\right)}\frac{q\left(x^{(t-1)}|x^{(0)}\right)}{q\left(x^{(t)}|x^{(0)}\right)}\right]-H_p\left(X^{(T)}\right)\tag{46}$$
+
+### B.4 KLダイバージェンスとエントロピーで書き直す
+
+そして、いくつかの項が条件付きエントロピーであることを確認する。
+
+$$\begin{align*}
+K=&\sum^{T}_{t=2}\int dx^{(0\cdots T)}q\left(x^{(0\cdots T)}\right)\log\left[\frac{p\left(x^{(t-1)}|x^{(t)}\right)}{q\left(x^{(t-1)}|x^{(t)},x^{(0)}\right)}\right]+\sum^T_{t=2}\left[H_q\left(X^{(t)}|X^{(0)}\right)-H_q\left(X^{(t-1)}|X^{(0)}\right)\right]-H_p\left(X^{(T)}\right)\tag{47}\\
+=&\sum^{T}_{t=2}\int dx^{(0\cdots T)}q\left(x^{(0\cdots T)}\right)\log\left[\frac{p\left(x^{(t-1)}|x^{(t)}\right)}{q\left(x^{(t-1)}|x^{(t)},x^{(0)}\right)}\right]+H_q\left(X^{(T)}|X^{(0)}\right)-H_q\left(X^{(1)}|X^{(0)}\right)-H_p\left(X^{(T)}\right)\tag{48}\\
+\end{align*}$$
+
+最後に、確率分布の対数比をKLダイバージェンスに変換する。
+
+$$\begin{align*}K=&-\sum^T_{t=2}\int dx^{(0)}dx^{(t)}q\left(x^{(0)},x^{(t)}\right)D_{KL}\left(q\left(x^{(t-1)}|x^{(t)},x^{(0)}\right)||p\left(x^{(t-1)}|x^{(t)}\right)\right)\\&+H_q\left(X^{(T)}|X^{(0)}\right)-H_q\left(X^{(1)}|X^{(0)}\right)-H_p\left(X^{(T)}\right)\end{align*}\tag{49}$$
+
+エントロピーは解析的に計算でき、KLダイバージェンスは $x^{(0)}$ と $x^{(t)}$ が与えられれば解析的に計算できることに注意されたい。
 
 ## C 摂動ガウス遷移
+
+$\tilde p(x^{(t-1)}|x^{(t)})$ を計算する。表記を簡単にするために、$\mu=f_\mu\left(x^{(t)},t\right)$ 、$\Sigma=f_\Sigma\left(x^{(t)},t\right)$ 、$y=x^{(t-1)}$ とする。
+
+$$\begin{align*}
+\tilde p\left(y|x^{(t)}\right)\propto&\space p\left(y|x^{(t)}\right)r(y)\tag{50}\\
+=&\mathcal N\left(y;\mu,\Sigma\right)r(y)\tag{51}\\
+\end{align*}$$
+
+これをエネルギー関数で書き直すと、$E_r(y)=-\log r(y)$ とすると以下のようになる。
+
+$$\begin{align*}
+\tilde p\left(y|x^{(t)}\right)\propto&\space \exp[-E(y)]\tag{52}\\
+E(y)=&\frac{1}{2}(y-\mu)^T\Sigma^{-1}(y-\mu)+E_r(y)\tag{53}\\
+\end{align*}$$
+
+もし $E_r(y)$ が $\frac{1}{2}(y-\mu)^T\Sigma^{-1}(y-\mu)$ に対して滑らかであれば、$\mu$ 周りのテイラー展開を使って近似することができる。1つの十分条件は、$E_r(y)$のヘシアンの固有値が $Σ^{-1}$ の固有値よりずっと小さいことである。ここで $g=\left.\frac{\partial E_r(y')}{\partial y'}\right|_{y'=\mu}$ とすると以下のようになる。
+
+$$E_r(y)\approx E_r(\mu)+(y-\mu)g\tag{54}$$
+
+これを全エネルギーに突っ込むと以下のようになる。
+
+$$\begin{align*}
+E(y)\approx&\space\frac{1}{2}(y-\mu)^T\Sigma^{-1}(y-\mu)+(y-\mu)^Tg+\rm{constant}\tag{55}\\
+=&\frac{1}{2}y^T\Sigma^{-1}y-\frac{1}{2}y^T\Sigma^{-1}\mu-\frac{1}{2}\mu^T\Sigma^{-1}y+\frac{1}{2}y^T\Sigma^{-1}\Sigma g+\frac{1}{2}g^T\Sigma\Sigma^{-1}y+\rm{constant}\tag{56}\\
+=&\frac{1}{2}(y-\mu+\Sigma g)^T\Sigma^{-1}(y-\mu+\Sigma g)+\rm{constant}\tag{57}\\
+\end{align*}$$
+
+これはガウシアンに相当する。
+
+$$\tilde p(y|x^{(t)})\approx\mathcal N(y;\mu-\Sigma g,\Sigma)\tag{58}$$
+
+元の形式論に置き換えると以下のようになる。
+
+$$\tilde p\left(x^{(t-1)}|x^{(t)}\right)\approx\mathcal N\left(x^{(t-1)};f_\mu\left(x^{(t)},t\right)+f_\Sigma\left(x^{(t)},t\right)\left.\frac{\partial\log r\left(x^{(t-1)'}\right)}{\partial x^{(t-1)'}}\right|_{x^{(t-1)'}=f_\mu\left(x^{(t)},t\right)},f_\Sigma\left(x^{(t)},t\right)\right)\tag{59}$$
 
 ## D 実験内容
 
@@ -339,7 +425,11 @@ $$H_q\left(X^{(t)}|X^{(t-1)}\right)\geq H_q\left(X^{(t-1)}X^{(t)}\right)\geq H_q
 
 #### D.1.1 ロールケーキ
 
+二次元のスイスロール分布の確率論的モデルが構築された。生成モデル $p(x^{(0\cdots T)})$ は、同一性共分散ガウス分布で初期化されたガウス拡散の40時間ステップで構成されている。1つの隠れ層と16の隠れユニットを持つ（正規化された）放射基底関数ネットワークが、平均と共分散関数 $f_\mu(x^{(t)},t)$ と、逆軌跡の対角 $f_\Sigma(x^{(t)},t)$ を生成するために学習された。各関数の一番上の読み出し層は、各時間ステップで独立して学習されたが、他のすべての層については、すべての時間ステップと両方の関数にわたって重みが共有された。最上層の出力 $f_\Sigma(x^{(t)},t)$ をシグモイドに通し、0と1の間に制限した。図1を見ればわかるように、スイスロール分布の学習に成功した。
+
 #### D.1.2 バイナリーハートビート分布
+
+長さ20の単純な2値系列で確率モデルを学習し、5番目の時間ビンごとに1が発生し、残りのビンは0である。生成モデルは、データと同じ平均活性を持つ独立二項分布 $(p(x^{(T)}_i=1)=0.2)$ で初期化された二項拡散の2000時間ステップで構成されている。シグモイド非線形を持つ多層パーセプトロンが学習され、20の入力ユニットと50ユニットずつの3つの隠れ層が、逆軌跡のベルヌーイレート $f_b(x^{(t)},t)$ を生成した。一番上の読み出し層は時間ステップごとに独立して学習されたが、それ以外の層はすべての時間ステップで重みが共有された。最上層の出力は、0と1の間に制限するためにシグモイドに通された。図2からわかるように、ハートビート分布の学習は成功した。真の生成過程での対数尤度は $log_2(\frac{1}{5})=-2.322$ ビット/シーケンスとなる。図2と表1を見ればわかるように、学習はほぼ完璧だった。
 
 ### D.2 画像
 
@@ -347,13 +437,45 @@ $$H_q\left(X^{(t)}|X^{(t-1)}\right)\geq H_q\left(X^{(t-1)}X^{(t)}\right)\geq H_q
 
 ##### 読み取り
 
+すべての場合において、畳み込みネットワークは、各画像ピクセル $i$ に対して出力 $y_i\in\mathcal R^{2J}$ のベクトルを生成するために使用された。
+
 ##### 時間依存性
+
+畳み込み出力 $y^\mu$ は、時間依存の「バンプ」関数の和における画素ごとの重み付け係数として使用され、画素iごとに出力 $z^\mu_i\in\mathcal R$ を生成する。
+
+$$z^\mu_i=\sum^J_{j=1}y^\mu_{ij}g_j(t)\tag{60}$$
+
+バンプ関数は、$\tau_j\in(0,T)$ をバンプ中心、$w$ をバンプ中心の間隔とする
+
+$$g_j(t)=\frac{\exp\left(-\frac{1}{2w^2}\left(t-\tau_j\right)^2\right)}{\sum^J_{k=1}\exp\left(-\frac{1}{2w^2}\left(t-\tau_k\right)^2\right)}\tag{61}$$
+
+で構成される。$z^\Sigma$ は同じ方法で生成されるが、$y^\Sigma$ を使用する。すべての画像実験では、$T=500$ を使用した樹皮データセットを除き、タイムステップ数 $T=1000$ を使用した。
 
 ##### 平均と分散
 
+最後に、これらの出力を組み合わせて、各画素 $i$ の拡散平均と分散予測を生成する。
+
+$$\begin{align*}
+\Sigma_{ii}=&\sigma\left(z^\Sigma_i+\sigma^{-1}(\beta_t)\right)\tag{62}\\
+\mu_i=&\left(x_i-z^\mu_i\right)\left(1-\Sigma_{ii}\right)+z^\mu_i\tag{63}\\
+\end{align*}$$
+
+ここで、$\Sigma$ と $\mu$ の両方は、順拡散カーネル $T_\pi(x^{(t)}|x^{(t-1)};\beta_t)$ の周りの摂動としてパラメータ化され、$z^\mu_i$ は、$p(x^{(t-1)}|x^{(t)})$ を何度も適用した結果として生じる平衡分布の平均である。$\Sigma$ は対角行列に制限される。
+
 ##### マルチスケール畳み込み
 
+具体的には、学習データの長距離依存性やマルチスケール依存性を発見し、利用することである。しかし、ネットワークの出力は各ピクセルの係数のベクトルであるため、ダウンサンプルされた特徴マップではなく、完全な解像度の特徴マップを生成することが重要である。そこで、以下のステップからなるマルチスケールコンボリューションレイヤーを定義する。
+
+1. ミーンプーリングを行って画像を複数のスケールにダウンサンプリングする。ダウンサンプリングは2の累乗で行う。
+2. 各スケールでコンボリューションを実行する。
+3. すべてのスケールをフル解像度にアップサンプリングし、得られた画像を合計する。
+4. soft relu $(\log[1+\exp(\cdot)])$ からなるポイントワイズ非線形変換を行う。
+
+最初の3つの線形演算の合成は、アップサンプリングによってもたらされるブロッキングアーティファクトまでは、マルチスケールコンボリューションカーネルによる畳み込みに似ている。このマルチスケール畳み込みを実現する方法は[^1]で述べられている。
+
 ##### 緻密なレイヤー
+
+密な（画像ベクトル全体に作用する）層とカーネル幅-1の畳み込み（各ピクセルの特徴ベクトルに別々に作用する）層は同じ形式を共有する。これらは線形変換と、それに続く $\tanh$ 非線形性で構成される。
 
 ## 参照
 
