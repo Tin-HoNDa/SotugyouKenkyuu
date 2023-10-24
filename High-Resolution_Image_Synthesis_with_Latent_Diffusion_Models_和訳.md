@@ -128,9 +128,9 @@ DMは尤度ベースモデルのクラスに属し、そのモードカバー動
 
 #### 拡散モデル
 
-**拡散モデル**[^82]は、正規分布する変数を徐々にノイズ除去することによってデータ分布 $p(x)$ を学習するように設計された確率的モデルであり、これは長さ $T$ の固定マルコフ連鎖の逆過程を学ぶことに相当する。画像合成については、最も成功したモデル[^15] [^30] [^72]は、ノイズ除去スコアマッチ[^85]を反映する $p(x)$ の変分下限の再可重化に依拠している。これらのモデルは、入力 $x_t$（$x_t$ は入力 $x$ のノイズバージョン）のノイズ除去されたバリエーションを予測するように訓練されたノイズ除去オートエンコーダ $\epsilon_\theta(x_t,t);t=1,\cdots,T$ の等しい重み付けシーケンスとして解釈することができる。対応する目的は、$t$ を $\{1,\cdots,T\}$ から均一にサンプリングして（[項B](#b-ノイズ除去拡散モデルの詳細情報)）
+**拡散モデル**[^82]は、正規分布する変数を徐々にノイズ除去することによってデータ分布 $p(x)$ を学習するように設計された確率的モデルであり、これは長さ $T$ の固定マルコフ連鎖の逆過程を学ぶことに相当する。画像合成については、最も成功したモデル[^15] [^30] [^72]は、ノイズ除去スコアマッチ[^85]を反映する $p(x)$ の変分下限の再可重化に依拠している。これらのモデルは、入力 $x_t$（$x_t$ は入力 $x$ のノイズバージョン）のノイズ除去されたバリエーションを予測するように訓練されたノイズ除去オートエンコーダ $\epsilon_\theta\left(x_t,t\right);t=1,\cdots,T$ の等しい重み付けシーケンスとして解釈することができる。対応する目的は、$t$ を $\{1,\cdots,T\}$ から均一にサンプリングして（[項B](#b-ノイズ除去拡散モデルの詳細情報)）
 
-$$L_{DM}=\mathbb{E}_{x,\epsilon～\mathcal{N}(0,1),t}[||\epsilon-\epsilon_\theta(x_t,t)||^2_2]\tag{1}$$
+$$L_{DM}=\mathbb{E}_{x,\epsilon～\mathcal{N}(0,1),t}\left[\left|\left|\epsilon-\epsilon_\theta\left(x_t,t\right)\right|\right|^2_2\right]\tag{1}$$
 
 に単純化することができる。
 
@@ -140,7 +140,7 @@ $\mathcal{E}$ と $\mathcal{D}$ からなる知覚圧縮モデルの学習によ
 
 高度に圧縮された離散的な潜在空間における自己回帰的な注意ベースの変換モデル[^23] [^66] [^103] に依存した以前の研究とは異なり、我々のモデルが提供する画像特有の帰納的バイアスを利用することができる。これには、主に2次元畳み込み層から基礎となるU-Netを構築する能力と、再重み付け境界を使用して知覚的に最も関連性の高いビットに目的をさらに集中させる能力が含まれ、現在では
 
-$$L_{LDM}:=\mathbb{E}_{\mathcal{E}(x),\epsilon～\mathcal{N}(0,1),t}[||\epsilon-\epsilon_\theta(z_t,t)||^2_2]\tag{2}$$
+$$L_{LDM}:=\mathbb{E}_{\mathcal{E}\left(x\right),\epsilon～\mathcal{N}\left(0,1\right),t}\left[\left|\left|\epsilon-\epsilon_\theta\left(z_t,t\right)\right|\right|^2_2\right]\tag{2}$$
 
 のように読み取れる。このモデルのニューラルバックボーン $\epsilon_\theta(◦,t)$ は、時間条件付きU-Net[^71]として実現されている。  前進過程が固定であるため、$z_t$ は訓練中に $\mathcal{E}$ から効率的に得ることができ、$p(z)$ からのサンプルは $\mathcal{D}$ を1回通過するだけで画像空間に復号化されることが可能である。
 
@@ -150,9 +150,9 @@ $$L_{LDM}:=\mathbb{E}_{\mathcal{E}(x),\epsilon～\mathcal{N}(0,1),t}[||\epsilon-
 
 しかし、画像合成の文脈では、クラスラベル[^15]や入力画像の不鮮明なバリエーション[^72]以外の他のタイプの条件とDMの生成力を組み合わせることは、今のところ未開拓の研究分野である。
 
-我々は、DMをより柔軟な条件付き画像生成器とするために、その基礎となるU-Netバックボーンを、様々な入力モダリティの注意に基づくモデルの学習に有効なcross-attentionメカニズム[^97]で補強する[^35] [^36]。様々なモダリティ（言語プロンプトなど）からの $y$ を前処理するために、$y$ を中間表現 $\tau_\theta(y)\in \mathbb{R}^{M\times d_\tau}$ に投影するドメイン固有エンコーダ $\tau_\theta$ を導入し、これをAttention$(Q,K,V)=$ softmax$(\frac{QK^T}{\sqrt{d}})\cdot V$ を実装したクロスアテンション層を介してU-Netの中間層へマッピングし、
+我々は、DMをより柔軟な条件付き画像生成器とするために、その基礎となるU-Netバックボーンを、様々な入力モダリティの注意に基づくモデルの学習に有効なcross-attentionメカニズム[^97]で補強する[^35] [^36]。様々なモダリティ（言語プロンプトなど）からの $y$ を前処理するために、$y$ を中間表現 $\tau_\theta(y)\in \mathbb{R}^{M\times d_\tau}$ に投影するドメイン固有エンコーダ $\tau_\theta$ を導入し、これをAttention$(Q,K,V)=$ softmax$\left(\frac{QK^T}{\sqrt{d}}\right)\cdot V$ を実装したクロスアテンション層を介してU-Netの中間層へマッピングし、
 
-$$Q=W_Q^{(i)}\cdot\varphi_i(z_t),K=W^{(i)}_K\cdot\tau_\theta(y),V=W_V^{(i)}\cdot\tau_\theta(y)$$
+$$Q=W_Q^{(i)}\cdot\varphi_i\left(z_t\right),K=W^{(i)}_K\cdot\tau_\theta\left(y\right),V=W_V^{(i)}\cdot\tau_\theta(y)$$
 
 とする。
 
@@ -160,7 +160,7 @@ $$Q=W_Q^{(i)}\cdot\varphi_i(z_t),K=W^{(i)}_K\cdot\tau_\theta(y),V=W_V^{(i)}\cdot
 
 画像とコンディショニングのペアに基づき、
 
-$$L_{LDM}:=\mathbb{E}_{\mathcal{E}(x),y,\epsilon～\mathcal{N}(0,1),t}[||\epsilon-\epsilon_\theta(z_t, t, \tau_\theta(y))||^2_2]\tag{3}$$
+$$L_{LDM}:=\mathbb{E}_{\mathcal{E}\left(x\right),y,\epsilon～\mathcal{N}\left(0,1\right),t}\left[\left|\left|\epsilon-\epsilon_\theta\left(z_t, t, \tau_\theta\left(y\right)\right)\right|\right|^2_2\right]\tag{3}$$
 
 により条件付きLDMを学習し、$\tau_\theta$ と $\epsilon_\theta$ は式3により共同最適化される。この条件付けのメカニズムは柔軟で、$\tau_\theta$ はドメイン固有のエキスパート、例えば $y$ がテキストプロンプトの場合は（マスクされていない）変換器[^97]でパラメータ化できる（[4.3.1項](#431-ldm用トランスフォーマーエンコーダー)参照）。
 
@@ -245,46 +245,46 @@ LDMはピクセルベースのアプローチと比較して計算量を大幅�
 
 拡散モデルは、データサンプル $x_0$ から出発して、$s<t$ のマルコフ構造を持つ順拡散過程 $q$ を
 
-$$q(x_t|x_0)=\mathcal{N}(x_t|\alpha_tx_0,\sigma^2_tI\hspace{-2.5pt}I\tag{4})$$
+$$q\left(x_t|x_0\right)=\mathcal{N}\left(x_t|\alpha_tx_0,\sigma^2_tI\hspace{-2.5pt}I\tag{4}\right)$$
 
 として定義するシーケンス $(\alpha_t)^T_{t=1}$ 、$(\sigma_t)^T_{t=1}$ からなる信号対雑音比 $SNR(t)=\frac{\alpha^2_t}{\sigma^2_t}$ で指定することができる。
 
 $$\begin{align*} \\
-q(x_t|x_s)=&\mathcal{N}(x_t|\alpha_{t|s}x_s,\sigma^2_{t|s}I\hspace{-2.5pt}I)\tag{5}\\
-\alpha_{t|s}=&\frac{\alpha_t}{\alpha_s}\tag{6}\\
-\sigma^2_{t|s}=&\sigma^2_t-\alpha^2_{t|s}\sigma^2_s\tag{7}\\
+  q\left(x_t|x_s\right)=&\mathcal{N}\left(x_t|\alpha_{t|s}x_s,\sigma^2_{t|s}I\hspace{-2.5pt}I\right)\tag{5}\\
+  \alpha_{t|s}=&\frac{\alpha_t}{\alpha_s}\tag{6}\\
+  \sigma^2_{t|s}=&\sigma^2_t-\alpha^2_{t|s}\sigma^2_s\tag{7}\\
 \end{align*}$$
 
 ノイズ拡散モデルは、このプロセスを時間的に逆行する同様のマルコフ構造で回帰する生成モデル $p(x_0)$ すなわち、
 
-$$p(x_0)=\int_zp(x_\Tau)\prod^\Tau_{t=1}p(x_{t-1}|x_t)\tag{8}$$
+$$p\left(x_0\right)=\int_zp\left(x_\Tau\right)\prod^\Tau_{t=1}p\left(x_{t-1}|x_t\right)\tag{8}$$
 
 のように規定される。そして、このモデルに関連する変分下限（ELBO）は、離散的な時間ステップにわたって
 
-$$-\log p(x_0)\leq\mathbb{KL}(q(x_\Tau|x_0)|p(x_\Tau))+\sum^\Tau_{t=1}\mathbb{E}_{q(x_t|x_0)}\mathbb{KL}(q(x_{t-1}|x_t,x_0)|p(x_{t-1}|x_t))\tag{9}$$
+$$\begin{align*}&-\log p\left(x_0\right)\\&\leq\mathbb{KL}\left(q\left(x_\Tau|x_0\right)|p\left(x_\Tau\right)\right)+\sum^\Tau_{t=1}\mathbb{E}_{q\left(x_t|x_0\right)}\mathbb{KL}\left(q\left(x_{t-1}|x_t,x_0\right)|p\left(x_{t-1}|x_t\right)\right)\end{align*}\tag{9}$$
 
 のように分解される。事前分布 $p(x_T)$ は通常、標準正規分布として選択され、ELBOの第1項は最終的な信号対雑音比 $SNR(T)$ にのみ依存する。残りの項を最小化するために、$p(x_{t-1}|x_t)$ をパラメータ化する一般的な選択は、真の事後 $q(x_{t-1}|x_t, x_0)$ で指定するが、未知の $x_0$ を現在のステップ $x_t$ に基づく推定 $x_θ(x_t,t)$ で置換することである。これにより、[^45]
 
 $$\begin{align*}\\
-p(x_{t-1}|x_t):=&q(x_{t-1}|x_t,x_\theta(x_t,t))\tag{10}\\
-=&\mathcal{N}(x_{t-1}|\mu_\theta(x_t,t),\sigma^2_{t|t-1}\frac{\sigma^2_{t-1}}{\sigma^2_t}I\hspace{-2.5pt}I)\tag{11}\\
+  p\left(x_{t-1}|x_t\right)\coloneqq&q\left(x_{t-1}|x_t,x_\theta\left(x_t,t\right)\right)\tag{10}\\
+  =&\mathcal{N}\left(x_{t-1}|\mu_\theta\left(x_t,t\right),\sigma^2_{t|t-1}\frac{\sigma^2_{t-1}}{\sigma^2_t}I\hspace{-2.5pt}I\right)\tag{11}\\
 \end{align*}$$
 
 が得られ、平均は
 
-$$\mu_\theta(x_t,t)=\frac{\alpha_{t|t-1}\sigma^2_{t-1}}{\sigma^2_t}x_t+\frac{\alpha_{t-1}\sigma^2_{t|t-1}}{\sigma^2_t}x_\theta(x_t,t)\tag{12}$$
+$$\mu_\theta\left(x_t,t\right)=\frac{\alpha_{t|t-1}\sigma^2_{t-1}}{\sigma^2_t}x_t+\frac{\alpha_{t-1}\sigma^2_{t|t-1}}{\sigma^2_t}x_\theta\left(x_t,t\right)\tag{12}$$
 
 と表すことができる。この場合、ELBOの和は
 
-$$\sum^T_{t=1}\mathbb{E}_{q(x_t|x_0)}\mathbb{KL}(q(x_{t-1}|x_t,x_0)|p(x_{t-1}))=\sum^T_{t=1}\mathbb{E}_{\mathcal{N}(\epsilon|0,I\hspace{-2.5px}I)}\frac{1}{2}(SNR(t-1)-SNR(t))||x_0-x_\theta(\alpha_tx_0+\sigma_t\epsilon,t)||^2\tag{13}$$
+$$\begin{align*}&\sum^T_{t=1}\mathbb{E}_{q\left(x_t|x_0\right)}\mathbb{KL}\left(q\left(x_{t-1}|x_t,x_0\right)|p\left(x_{t-1}\right)\right)\\=&\sum^T_{t=1}\mathbb{E}_{\mathcal{N}\left(\epsilon|0,I\hspace{-2.5px}I\right)}\frac{1}{2}\left(SNR\left(t-1\right)-SNR\left(t\right)\right)\left|\left|x_0-x_\theta\left(\alpha_tx_0+\sigma_t\epsilon,t\right)\right|\right|^2\end{align*}\tag{13}$$
 
 に単純化される。[^30]に倣って、再構成項をノイズ除去目的
 
-$$||x_0-x_\theta(\alpha_tx_0+\sigma_t\epsilon,t)||^2=\frac{\sigma^2_t}{\alpha^2_t}||\epsilon-\epsilon_\theta(\alpha_tx_0+\sigma_t\epsilon,t)||^2\tag{15}$$
+$$\left|\left|x_0-x_\theta\left(\alpha_tx_0+\sigma_t\epsilon,t\right)\right|\right|^2=\frac{\sigma^2_t}{\alpha^2_t}\left|\left|\epsilon-\epsilon_\theta(\alpha_tx_0+\sigma_t\epsilon,t)\right|\right|^2\tag{15}$$
 
 として表現する再パラメータ化
 
-$$\epsilon_\theta(x_t,t)=(x_t-\alpha_tx_\theta(x_t,t))/\sigma_t\tag{14}$$
+$$\epsilon_\theta\left(x_t,t\right)=\left(x_t-\alpha_tx_\theta\left(x_t,t\right)\right)/\sigma_t\tag{14}$$
 
 と、各項を同じ重みにする再重み付けを行い、式（1）とする。
 
@@ -294,7 +294,7 @@ $$\epsilon_\theta(x_t,t)=(x_t-\alpha_tx_\theta(x_t,t))/\sigma_t\tag{14}$$
 
 固定分散を持つ $\epsilon$ -パラメータ化されたモデルの場合、[^15]で紹介されたガイドアルゴリズムは次のようになる。
 
-$$\hat{\epsilon}\larr\epsilon_\theta(z,t)+\sqrt{1-\alpha^2_t}\nabla_{z_t}\log p_\Phi(y|z_t)\tag{16}$$
+$$\hat{\epsilon}\larr\epsilon_\theta\left(z,t\right)+\sqrt{1-\alpha^2_t}\nabla_{z_t}\log p_\Phi\left(y|z_t\right)\tag{16}$$
 
 これは、「スコア」$\theta$ を条件付き分布 $\log p_\Phi(y|z_t)$ で補正する更新と解釈することができる。
 
@@ -302,7 +302,7 @@ $$\hat{\epsilon}\larr\epsilon_\theta(z,t)+\sqrt{1-\alpha^2_t}\nabla_{z_t}\log p_
 
 例えば、分散を固定したガウスガイド
 
-$$\log p_\Phi(y|z_t)=-\frac{1}{2}||y-T(\mathcal{D}(z_0(z_t)))||^2_2\tag{17}$$
+$$\log p_\Phi\left(y|z_t\right)=-\frac{1}{2}\left|\left|y-T\left(\mathcal{D}\left(z_0\left(z_t\right)\right)\right)\right|\right|^2_2\tag{17}$$
 
 が $L_2$ 回帰の目的語になると仮定することができる。
 
@@ -351,13 +351,13 @@ LDM-SRの汎化性を評価するために、クラス条件付きImageNetモデ
 テキストから画像、レイアウトから画像（[4.3.1節](#431-ldm用トランスフォーマーエンコーダー)）合成の実験では、入力 $y$ をトークン化して処理し、出力 $\zeta:=τθ(y)$、ここで $\zeta\in \mathbb{R}^{M\times d_\tau}$ を生成するマスクなし変換器として条件 $\tau_\theta$ を実装している。より具体的には、変換器は、以下のように、大域的自己注目層、層正規化、および位置ワイズMLPからなるN個の変換器ブロックから実装される。
 
 $$\begin{align*}\\
-\zeta\larr&TokEmb(y)+PosEmb(y)\tag{18}\\
-for\space i&=1,\cdots,N:\\
-\zeta_1&\larr LayerNorm(\zeta)\tag{19}\\
-\zeta_2&\larr MultiHeadSelfAttention(\zeta_1)+\zeta\tag{20}\\
-\zeta_3&\larr LayerNorm(\zeta_2)\tag{21}\\
-\zeta&\larr MLP(\zeta_3)+\zeta_2\tag{22}\\
-\zeta\larr&LayerNorm(\zeta)\tag{23}\\
+  \zeta\larr&TokEmb\left(y\right)+PosEmb\left(y\right)\tag{18}\\
+  for\space i&=1,\cdots,N:\\
+  \zeta_1&\larr LayerNorm\left(\zeta\right)\tag{19}\\
+  \zeta_2&\larr MultiHeadSelfAttention\left(\zeta_1\right)+\zeta\tag{20}\\
+  \zeta_3&\larr LayerNorm\left(\zeta_2\right)\tag{21}\\
+  \zeta&\larr MLP\left(\zeta_3\right)+\zeta_2\tag{22}\\
+  \zeta\larr&LayerNorm\left(\zeta\right)\tag{23}\\
 \end{align*}$$
 
 $\zeta$ が利用できるようになると、図3に描かれているように、コンディショニングはクロスアテンションメカニズムを介してUNetにマッピングされる。我々は、"ablated UNet"[^15]アーキテクチャを変更し、self-attention層を、(i)self-attention層、(ii)position-wise MLP、(iii)cross-attention層の交互層を持つ $T$ ブロックからなる浅い（マスクされない）トランスフォーマーと置き換える(表16)。なお、(ii)と(iii)がない場合、このアーキテクチャは「ablated UNet」と同等である。
@@ -412,13 +412,13 @@ COCOデータセットにおける表9のLayout-to-Imageモデルのサンプル
 
 自動符号化モデル $(\mathcal{E,D})$ を訓練する完全な目的は以下の通りである。
 
-$$L_{Autoencoder}=\min_{\mathcal{E,D}}\max_\psi(L_{rec}(x,\mathcal{D}(\mathcal{E}(x)))-L_{adv}(\mathcal{D}(\mathcal{E}(x)))+\log D_\phi(x)+L_{reg}(x;\mathcal{E,D}))\tag{25}$$
+$$L_{Autoencoder}=\min_{\mathcal{E,D}}\max_\psi\left(L_{rec}\left(x,\mathcal{D}\left(\mathcal{E}\left(x\right)\right)\right)-L_{adv}\left(\mathcal{D}\left(\mathcal{E}\left(x\right)\right)\right)+\log D_\phi\left(x\right)+L_{reg}\left(x;\mathcal{E,D}\right)\right)\tag{25}$$
 
 ### 潜在空間における拡散モデルの学習
 
 なお、学習した潜在空間上で拡散モデルを学習する場合、$p(z)$ または $p(z|y)$ を学習する際に、再び以下の2つのケースを区別する（[4.3節](#43-条件付き潜伏拡散)）。（i）KL規則化潜在空間に対して、$z=\mathcal{E}_\mu(x)+\mathcal{E}_\sigma(x)\cdotε=:\mathcal{E}(x)$、$ε〜\mathcal{N}(0,1)$ をサンプルする。潜在を再スケーリングする際、データ中の最初のバッチから成分ごとの分散
 
-$$\hat{\sigma}^2=\frac{1}{bchw}\sum_{b,c,h,w}(z^{b,c,h,w}-\hat{\mu})^2$$
+$$\hat{\sigma}^2=\frac{1}{bchw}\sum_{b,c,h,w}\left(z^{b,c,h,w}-\hat{\mu}\right)^2$$
 
 を推定し、ここで、$\hat{\mu}=\frac{1}{bchw}\sum_{b,c,h,w}z^{b,c,h,w}$。$\mathcal{E}$ の出力は、再スケーリングされた潜在が単位標準偏差、すなわち $z\leftarrow\frac{z}{\hat{\sigma}}=\frac{\mathcal{E}(x)}{\hat{\sigma}}$ を持つようにスケーリングされる。 (ii) VQ正則化潜在空間の場合、量子化層の前に $z$ を抽出し、量子化演算をデコーダに吸収する、すなわち $\mathcal{D}$ の第1層として解釈することができる。
 

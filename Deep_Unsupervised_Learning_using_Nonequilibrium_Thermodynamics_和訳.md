@@ -1,4 +1,4 @@
-# 非平衡熱力学を用いた深い教師なし学習 <!-- omit in toc -->
+# 非平衡熱力学を用いた教師なしディープラーニング <!-- omit in toc -->
 
 ## 目次 <!-- omit in toc -->
 
@@ -15,8 +15,8 @@
   - [2.5 分布の乗算と事後分布の計算](#25-分布の乗算と事後分布の計算)
     - [2.5.1 修正マージナル分布](#251-修正マージナル分布)
     - [2.5.2 修正拡散ステップ](#252-修正拡散ステップ)
-    - [2.5.3 $r\left(x^{(t)}\right)$ の適用](#253-rleftxtright-の適用)
-    - [2.5.4 $r\left(x^{(t)}\right)$ の選択](#254-rleftxtright-の選択)
+    - [2.5.3 $r\\left(x^{(t)}\\right)$ の適用](#253-rleftxtright-の適用)
+    - [2.5.4 $r\\left(x^{(t)}\\right)$ の選択](#254-rleftxtright-の選択)
   - [2.6 逆プロセスのエントロピー](#26-逆プロセスのエントロピー)
 - [3 実験](#3-実験)
   - [3.1 玩具問題](#31-玩具問題)
@@ -58,7 +58,7 @@
 
 歴史的に、確率モデルは「扱いやすさ」と「柔軟性」という相反する2つの目的のトレードオフに悩まされてきた。扱いやすいモデルは、解析的に評価することができ、データ（例えば、ガウスやラプラス）に簡単に適合させることができる。しかし、これらのモデルでは、豊富なデータセットの構造を適切に記述することはできない。一方、柔軟なモデルは、任意のデータの構造に適合するように成形することができる。例えば、柔軟な分布 $p(x)=\frac{\phi(x)}{Z}$ をもたらす任意の（非負）関数 $φ(x)$ でモデルを定義することができる。しかし、この正規化定数を計算するのは一般的に困難である。このような柔軟なモデルの評価、学習、またはサンプルの抽出には、通常、非常に高価なモンテカルロ処理が必要である。
 
-例えば、平均場理論とその展開 [^48] [^49]、変分ベイズ [^23]、対比発散 [^55] [^17]、最小確率フロー [^43] [^42]、最小KL縮約 [^32]、適切なスコアリングルール[^13] [^37]、スコアマッチング [^19]、擬尤度[^5]、ルーピー信念伝播 [^34]、その他多数。ノンパラメトリック手法 [^12] も非常に効果的である（ノンパラメトリック手法は、扱いやすいモデルと柔軟なモデルの間をスムーズに移行するものと見なすことができる。例えば、ノンパラメトリックのガウス混合モデルは、単一のガウスを使って少量のデータを表現するが、無限のデータを無限のガウスの混合として表現することができる）。
+例えば、平均場理論とその展開 [^48] [^49]、変分ベイズ [^23]、対比発散 [^55] [^17]、最小確率フロー [^43] [^42]、最小KL縮約 [^32]、適切なスコアリングルール[^13] [^37]、スコアマッチング [^19]、擬尤度[^5]、ルーピー確率伝播法 [^34]、その他多数。ノンパラメトリック手法 [^12] も非常に効果的である（ノンパラメトリック手法は、扱いやすいモデルと柔軟なモデルの間をスムーズに移行するものと見なすことができる。例えば、ノンパラメトリックのガウス混合モデルは、単一のガウスを使って少量のデータを表現するが、無限のデータを無限のガウスの混合として表現することができる）。
 
 ### 1.1 拡散確率モデル
 
@@ -79,7 +79,7 @@
 
 ### 1.2 他の研究との関係
 
-wake-sleepアルゴリズム [^18] [^9] は、推論と生成確率モデルを相互に学習させるというアイデアを導入した。このアプローチは、いくつかの例外 [^41] [^24] はあるものの、20年近くほとんど未解明のままであった。最近、この考え方を発展させる研究が爆発的に増えている。[^25] [^15] [^38] [^36] では、変分学習と推論アルゴリズムが開発され、柔軟な生成モデルと潜在変数に対する事後分布を、互いに直接学習できるようになった。
+wake-sleep アルゴリズム [^18] [^9] は、推論と生成確率モデルを相互に学習させるというアイデアを導入した。このアプローチは、いくつかの例外 [^41] [^24] はあるものの、20年近くほとんど未解明のままであった。最近、この考え方を発展させる研究が爆発的に増えている。[^25] [^15] [^38] [^36] では、変分学習と推論アルゴリズムが開発され、柔軟な生成モデルと潜在変数に対する事後分布を、互いに直接学習できるようになった。
 
 これらの論文の変分境界は、我々の訓練目的や [^41] の先行研究で用いられているものと類似している。しかし、我々の動機とモデルの形式は全く異なっており、本論文ではこれらの手法と比較して以下のような違いや利点を残している。
 
@@ -91,7 +91,7 @@ wake-sleepアルゴリズム [^18] [^9] は、推論と生成確率モデルを�
 
 確率モデルを訓練するための関連技術（以下に要約）は数多くあり、生成モデルのための柔軟性の高いフォームを開発したり、確率的軌道を訓練したり、ベイジアンネットワークの反転を学習したりする。Reweighted wake-sleep [^7] は、オリジナルのウェイクスリープ・アルゴリズムの拡張と改良された学習ルールを開発している。生成確率ネットワーク [^2] [^56] は、マルコフ・カーネルを訓練して、その均衡分布をデータ分布に一致させる。ニューラル自己回帰分布推定量 [^28]（およびそのリカレント [^52] とディープ [^53] 拡張）は、結合分布を各次元にわたる扱いやすい条件付き分布の列に分解する。敵対的ネットワーク [^14] は、生成されたサンプルを真のデータと区別しようとする分類器に対して、生成モデルを学習する。[^40] における同様の目的は、マージン的に独立したユニットを持つ表現への双方向写像を学習することである。[^39] [^10] では、単純な階乗密度関数を持つ潜在表現に対して、双射的決定性写像が学習される。[^46] では、ベイジアンネットワークに対して確率的逆行列が学習される。条件付きガウススケール混合 (MCGSMs) [^50] は、一連の因果近傍に依存するパラメータを持つガウススケール混合を用いてデータセットを記述する。さらに、単純な潜在分布からデータ分布への柔軟な生成マッピングを学習する重要な研究がある。初期の例としては、ニューラルネットワークを生成モデルとして導入した [^33] や、潜在空間からデータ空間への確率多様体マッピングを学習した[^6]がある。敵対的ネットワークと MCGSMs に対して実験的に比較する。
 
-物理学からの関連するアイデアには、機械学習ではアニールされた重要度サンプリング（AIS）[^35] として知られるヤジンスキー方程式 [^20] があり、これは正規化定数の比率を計算するために、ある分布を別の分布にゆっくりと変換するマルコフ連鎖を使用する。[^8] では、AISは順方向ではなく逆方向の軌道を使っても実行できることが示されている。フォッカー・プランク方程式の確率的実現であるランジュヴァン・ダイナミクス [^27] は、任意の目標分布を平衡とするガウス拡散過程を定義する方法を示している。[^47] では、Fokker-Planck方程式が確率最適化に用いられている。最後に、Kolmogorovの前進・後退方程式 [^11] は、多くの前進拡散過程について、逆拡散過程も同じ関数形で記述できることを示している。
+物理学からの関連するアイデアには、機械学習ではアニールされた重要度サンプリング（AIS）[^35] として知られるヤジンスキー方程式 [^20] があり、これは正規化定数の比率を計算するために、ある分布を別の分布にゆっくりと変換するマルコフ連鎖を使用する。[^8] では、AISは順方向ではなく逆方向の軌道を使っても実行できることが示されている。フォッカー・プランク方程式の確率的実現であるランジュヴァン・ダイナミクス [^27] は、任意の目標分布を平衡とするガウス拡散過程を定義する方法を示している。[^47] では、Fokker-Planck 方程式が確率最適化に用いられている。最後に、Kolmogorov の前進・後退方程式 [^11] は、多くの前進拡散過程について、逆拡散過程も同じ関数形で記述できることを示している。
 
 ## 2 アルゴリズム
 
@@ -106,11 +106,11 @@ wake-sleepアルゴリズム [^18] [^9] は、推論と生成確率モデルを�
 データ分布 $q\left(x^{(0)}\right)$ にラベルを付ける。このデータ分布は、$\pi(y)$ に対してマルコフ拡散カーネル $T_\pi(y|y';\beta)$ を繰り返し適用することで、$\pi(y)$ が徐々にお行儀の良い（解析的に扱いやすい）分布に変換される（$\beta$ は拡散率）。
 
 $$\begin{align*}
-\pi(y)&=\int dy'T_\pi(y|y';\beta)\pi(y)\tag{1}\\
-q\left(x^{(t)}|x^{(t-1)}\right)&=T_\pi\left(x^{(t)}|x^{(t-1)};\beta_t\right)\tag{2}\\
+  \pi(y)&=\int dy'T_\pi(y|y';\beta)\pi(y)\tag{1}\\
+  q\left(x^{(t)}|x^{(t-1)}\right)&=T_\pi\left(x^{(t)}|x^{(t-1)};\beta_t\right)\tag{2}\\
 \end{align*}$$
 
-従って、データ分布から出発してT回の拡散ステップを実行することに対応する順方向軌道は、以下のようになる。
+従って、データ分布から出発して $T$ 回の拡散ステップを実行することに対応する順方向軌道は、以下のようになる。
 
 $$q\left(x^{(0\cdots T)}\right)=q\left(x^{(0)}\right)\prod^T_{t=1}q\left(x^{(t)}|x^{(t-1)}\right)\tag{3}$$
 
@@ -121,8 +121,8 @@ $$q\left(x^{(0\cdots T)}\right)=q\left(x^{(0)}\right)\prod^T_{t=1}q\left(x^{(t)}
 生成分布は、同じ軌跡を記述するように学習されるが、逆に、
 
 $$\begin{align*}
-p\left(x^{(T)}\right)&=\pi\left(x^{(T)}\right)\tag{4}\\
-p\left(x^{(0\cdots T)}\right)&=p\left(x^{(T)}\right)\prod^T_{t=1}p\left(x^{(t-1)}|x^{(t)}\right)\tag{5}\\
+  p\left(x^{(T)}\right)&=\pi\left(x^{(T)}\right)\tag{4}\\
+  p\left(x^{(0\cdots T)}\right)&=p\left(x^{(T)}\right)\prod^T_{t=1}p\left(x^{(t-1)}|x^{(t)}\right)\tag{5}\\
 \end{align*}$$
 
 ガウス拡散と二項拡散の両方について、連続拡散（小さなステップサイズ $\beta$ の極限）では、拡散過程の反転は前進過程と同じ関数形を持つ[^11]。$q\left(x^{(t)}|x^{(t-1)}\right)$ はガウス(二項)分布であり、$\beta_t$ が小さければ $q\left(x^{(t-1)}|x^{(t)}\right)$ もガウス(二項)分布となる。軌跡が長ければ長いほど、拡散率 $\beta$ を小さくすることができる。
@@ -135,12 +135,12 @@ p\left(x^{(0\cdots T)}\right)&=p\left(x^{(T)}\right)\prod^T_{t=1}p\left(x^{(t-1)
 
 $$p\left(x^{(0)}\right)=\int dx^{(1\cdots T)}p\left(x^{(0\cdots T)}\right)\tag{6}$$
 
-直観的には、この積分は難解である。しかし、アニールされた重要度サンプリングとJarzynskiの等式からヒントを得て、代わりに順方向と逆方向の軌跡の相対確率を評価し、順方向の軌跡を平均する。
+直観的には、この積分は難解である。しかし、アニールされた重要度サンプリングと Jarzynski の等式からヒントを得て、代わりに順方向と逆方向の軌跡の相対確率を評価し、順方向の軌跡を平均する。
 
 $$\begin{align*}
-p\left(x^{(0)}\right)&=\int dx^{(1\cdots T)}p\left(x^{(0\cdots T)}\right)\frac{q\left(x^{(1\cdots T)}|x^{(0)}\right)}{q\left(x^{(1\cdots T)}|x^{(0)}\right)}\tag{7}\\
-&=\int dx^{(1\cdots T)}q\left(x^{(1\cdots T)}|x^{(0)}\right)\frac{p\left(x^{(0\cdots T)}\right)}{q\left(x^{(1\cdots T)}|x^{(0)}\right)}\tag{8}\\
-&=\int dx^{(1\cdots T)}q\left(x^{(1\cdots T)}|x^{(0)}\right)p\left(x^{(T)}\right)\prod^T_{t=1}\frac{p\left(x^{(t-1)}|x^{(t)}\right)}{q\left(x^{(t)}|x^{(t-1)}\right)}\tag{9}\\
+  p\left(x^{(0)}\right)&=\int dx^{(1\cdots T)}p\left(x^{(0\cdots T)}\right)\frac{q\left(x^{(1\cdots T)}|x^{(0)}\right)}{q\left(x^{(1\cdots T)}|x^{(0)}\right)}\tag{7}\\
+  &=\int dx^{(1\cdots T)}q\left(x^{(1\cdots T)}|x^{(0)}\right)\frac{p\left(x^{(0\cdots T)}\right)}{q\left(x^{(1\cdots T)}|x^{(0)}\right)}\tag{8}\\
+  &=\int dx^{(1\cdots T)}q\left(x^{(1\cdots T)}|x^{(0)}\right)p\left(x^{(T)}\right)\prod^T_{t=1}\frac{p\left(x^{(t-1)}|x^{(t)}\right)}{q\left(x^{(t)}|x^{(t-1)}\right)}\tag{9}\\
 \end{align*}$$
 
 これは、前方軌道 $q\left(x^{(1\cdots T)}|x^{(0)}\right)$ のサンプルを平均化することで高速に評価できる。$\beta$ が無限小の場合、軌道上の順方向分布と逆方向分布は同一にすることができる（[2.2節](#22-逆軌道)）。もし両者が同一であれば、上の積分を正確に評価するために必要なのは $q\left(x^{(1\cdots T)}|x^{(0)}\right)$ からのサンプル1つだけである。これは統計物理学における準静的過程の場合に相当する [^45] [^21]。
@@ -150,19 +150,19 @@ p\left(x^{(0)}\right)&=\int dx^{(1\cdots T)}p\left(x^{(0\cdots T)}\right)\frac{q
 学習はモデルの対数尤度
 
 $$\begin{align*}
-L&=\int dx^{(0)}q\left(x^{(0)}\right)\log p\left(x^{(0)}\right)\tag{10}\\
-&=\int dx^{(0)}q\left(x^{(0)}\right)\log\left[\int dx^{(1\cdots T)}q\left(x^{(1\cdots T)}|x^{(0)}\right)p\left(x^{(T)}\right)\prod^T_{t=1}\frac{p\left(x^{(t-1)}|x^{(t)}\right)}{q\left(x^{(t)}|x^{(t-1)}\right)}\right]\tag{11}\\
+  L&=\int dx^{(0)}q\left(x^{(0)}\right)\log p\left(x^{(0)}\right)\tag{10}\\
+  &=\int dx^{(0)}q\left(x^{(0)}\right)\log\left[\int dx^{(1\cdots T)}q\left(x^{(1\cdots T)}|x^{(0)}\right)p\left(x^{(T)}\right)\prod^T_{t=1}\frac{p\left(x^{(t-1)}|x^{(t)}\right)}{q\left(x^{(t)}|x^{(t-1)}\right)}\right]\tag{11}\\
 \end{align*}$$
 
-を最大化することになり、これはJensenの不等式
+を最大化することになり、これは Jensen の不等式
 
 $$L\geq\int dx^{(0\cdots T)}q\left(x^{(0\cdots T)}\right)\log\left[p\left(x^{(T)}\right)\prod^T_{t=1}\frac{p\left(x^{(t-1)}|x^{(t)}\right)}{q\left(x^{(t)}|x^{(t-1)}\right)}\right]\tag{12}$$
 
 によって下界が与えられる。[付録B](#b-対数尤度の下界)にあるように、我々の拡散軌道では、エントロピーとKLダイバージェンスが解析的に計算できる
 
 $$\begin{align*}
-L&\geq K\tag{13}\\
-K&=-\sum_{t=2}^T\int dx^{(0)}dx^{(t)}q\left(x^{(0)},x^{(t)}\right)D_{KL}\left(q\left(x^{(t-1)}|x^{(t)},x^{(0)}\right)||p\left(x^{(t-1)}|x^{(t)}\right)\right)+H_q\left(X^{(T)}|X^{(0)}\right)-H_q\left(X^{(1)}|X^{(0)}\right)-H_p\left(X^{(T)}\right)\tag{14}\\
+  L&\geq K\tag{13}\\
+  K&=-\sum_{t=2}^T\int dx^{(0)}dx^{(t)}q\left(x^{(0)},x^{(t)}\right)D_{KL}\left(q\left(x^{(t-1)}|x^{(t)},x^{(0)}\right)||p\left(x^{(t-1)}|x^{(t)}\right)\right)+H_q\left(X^{(T)}|X^{(0)}\right)-H_q\left(X^{(1)}|X^{(0)}\right)-H_p\left(X^{(T)}\right)\tag{14}\\
 \end{align*}$$
 
 に帰着する。この境界の導出は、変分ベイズ法における対数尤度の境界の導出と類似している。
@@ -181,13 +181,13 @@ $$\hat p\left(x^{(t-1)}|x^{(t)}\right)=\argmax_{p\left(x^{(t-1)}|x^{(t)}\right)}
 
 前進軌道における $\beta_t$ の選択は、学習済みモデルの性能にとって重要である。AISでは、中間分布の適切なスケジュールは、対数分割関数の推定精度を大幅に向上させることができる[^16]。熱力学では、平衡分布間を移動する際のスケジュールが、どれだけの自由エネルギーが失われるかを決定する[^45] [^21]。
 
-ガウス拡散の場合、$K$ に対する勾配上昇によって前方拡散スケジュール $β_{2\cdots T}$を学習する。最初のステップの分散 $\beta_1$ は、オーバーフィッティングを防ぐために小さな定数に固定されている。凍結ノイズ (frozen noise) を使用することで、$q\left(x^{(1\cdots T)}|x^{(0)}\right)$ からのサンプルの $\beta_{1\cdots T}$ への依存性が明示される。[^25]のように、ノイズは追加の補助変数として扱われ、パラメータに関して $K$ の偏導関数を計算する間、一定に保たれる。
+ガウス拡散の場合、$K$ に対する勾配上昇によって前方拡散スケジュール $β_{2\cdots T}$ を学習する。最初のステップの分散 $\beta_1$ は、オーバーフィッティングを防ぐために小さな定数に固定されている。凍結ノイズ (frozen noise) を使用することで、$q\left(x^{(1\cdots T)}|x^{(0)}\right)$ からのサンプルの $\beta_{1\cdots T}$ への依存性が明示される。[^25]のように、ノイズは追加の補助変数として扱われ、パラメータに関して $K$ の偏導関数を計算する間、一定に保たれる。
 
 二項拡散の場合、離散的な状態空間は、凍結ノイズを伴う勾配上昇を不可能にする。代わりに、拡散ステップごとに元の信号の一定割合 $\frac{1}{T}$ を消去するように、順拡散スケジュール $\beta_{1\cdots T}$ を選択し、$\beta_t=(T-t+1)^{-1}$ の拡散率を得る。
 
 ### 2.5 分布の乗算と事後分布の計算
 
-信号ノイズ除去や欠損値の推論を行うために事後分布を計算するようなタスクは、モデル分布 $p\left(x^{(0)}\right)$ と第2の分布、または境界付き正関数 $r\left(x^{(0)}\right)$の掛け算を必要とし、新しい分布 $\tilde p\left(x^{(0)}\right)\propto p\left(x^{(0)}\right)r\left(x^{(0)}\right)$ を生成する。
+信号ノイズ除去や欠損値の推論を行うために事後分布を計算するようなタスクは、モデル分布 $p\left(x^{(0)}\right)$ と第2の分布、または境界付き正関数 $r\left(x^{(0)}\right)$ の掛け算を必要とし、新しい分布 $\tilde p\left(x^{(0)}\right)\propto p\left(x^{(0)}\right)r\left(x^{(0)}\right)$ を生成する。
 
 分布の乗算は、変分オートエンコーダ、GSNs、NADEs、ほとんどのグラフィカルモデルなど、多くの技術にとってコストがかかり困難である。しかし、拡散モデルの下では、第2の分布は拡散過程の各ステップに対する小さな摂動として扱うか、あるいは多くの場合、各拡散ステップに正確に掛け合わせることができるので、これは簡単である。図3と図5は、自然画像のノイズ除去とインペインティングを行うために拡散モデルを使用することを示している。以下のセクションでは、拡散確率モデルの文脈における分布の乗算方法について説明する。
 
@@ -216,9 +216,9 @@ $$p\left(x^{(t)}\right)=\int dx^{(t+1)}p\left(x^{(t)}|x^{(t+1)}\right)p\left(x^{
 に従う。我々は、摂動マルコフ・カーネル $\tilde p\left(x^{(t)}|x^{(t+1)}\right)$ が摂動分布の平衡条件
 
 $$\begin{align*}
-\tilde p\left(x^{(t)}\right)&=\int dx^{(t+1)}\tilde p\left(x^{(t)}|x^{(t+1)}\right)\tilde p\left(x^{(t+1)}\right)\tag{18}\\
-\frac{p\left(x^{(t)}\right)r\left(x^{(t)}\right)}{\tilde Z_t}&=\int dx^{(t+1)}\tilde p\left(x^{(t)}|x^{(t+1)}\right)\frac{p\left(x^{(t+1)}\right)r\left(x^{(t+1)}\right)}{\tilde Z_{t+1}}\tag{19}\\
-p\left(x^{(t)}\right)&=\int dx^{(t+1)}\tilde p\left(x^{(t)}|x^{(t+1)}\right)\frac{\tilde Z_tr\left(x^{(t+1)}\right)}{\tilde Z_{t+1}r\left(x^{(t)}\right)}p\left(x^{(t+1)}\right)\tag{20}\\
+  \tilde p\left(x^{(t)}\right)&=\int dx^{(t+1)}\tilde p\left(x^{(t)}|x^{(t+1)}\right)\tilde p\left(x^{(t+1)}\right)\tag{18}\\
+  \frac{p\left(x^{(t)}\right)r\left(x^{(t)}\right)}{\tilde Z_t}&=\int dx^{(t+1)}\tilde p\left(x^{(t)}|x^{(t+1)}\right)\frac{p\left(x^{(t+1)}\right)r\left(x^{(t+1)}\right)}{\tilde Z_{t+1}}\tag{19}\\
+  p\left(x^{(t)}\right)&=\int dx^{(t+1)}\tilde p\left(x^{(t)}|x^{(t+1)}\right)\frac{\tilde Z_tr\left(x^{(t+1)}\right)}{\tilde Z_{t+1}r\left(x^{(t)}\right)}p\left(x^{(t+1)}\right)\tag{20}\\
 \end{align*}$$
 
 に従うことを望む。式20は以下の式が成り立つときに成り立つ。
@@ -267,7 +267,10 @@ $$r\left(x^{(t)}\right)=r\left(x^{(0)}\right)$$
 
 順方向過程は既知であるので、逆方向の軌跡の各ステップの条件付きエントロピーの上界と下界を導くことができ、したがって対数尤度の上界と下界を導くことができる。
 
-$$H_q\left(X^{(t)}|X^{(t-1)}\right)+H_q\left(X^{(t-1)}|X^{(0)}\right)-H_q\left(X^{(t)}|X^{(0)}\right)\leq H_q\left(X^{(t-1)}|X^{(t)}\right)\leq H_q\left(X^{(t)}|X^{(t-1)}\right)\tag{24}$$
+$$\begin{align*}
+  &H_q\left(X^{(t)}|X^{(t-1)}\right)+H_q\left(X^{(t-1)}|X^{(0)}\right)-H_q\left(X^{(t)}|X^{(0)}\right)\\
+  \leq&H_q\left(X^{(t-1)}|X^{(t)}\right)\\
+  \leq&H_q\left(X^{(t)}|X^{(t-1)}\right)\end{align*}\tag{24}$$
 
 ここで、上界も下界も $q\left(x^{(1\cdots T)}|x^{(0)}\right)$ にのみ依存し、解析的に計算できる。導出は[付録A](#a-条件付きエントロピー境界の導出)に記載されている。
 
@@ -313,39 +316,39 @@ Dead Leaf Images [^22] [^31] は、スケール上のべき乗則分布から描
 
 ## 謝辞
 
-Lucas Theis、Subhaneil Lahiri、Ben Poole、Diederik P. Kingma、Taco Cohen、Philip Bachman、A¨aron van den Oordには非常に有益な議論を、Ian GoodfellowにはParzen-windowのコードを提供していただいた。Jascha Sohl-Dicksteinに資金を提供してくれたKhan AcademyとOffice of Naval Researchに感謝し、Surya Ganguliに資金を提供してくれたOffice of Naval ResearchとBurroughs-Wellcome財団、Sloan財団、James S. McDonnell財団に感謝する。
+Lucas Theis、Subhaneil Lahiri、Ben Poole、Diederik P. Kingma、Taco Cohen、Philip Bachman、Aäron van den Oordには非常に有益な議論を、Ian Goodfellow には Parzen-window のコードを提供していただいた。Jascha Sohl-Dickstein に資金を提供してくれた Khan AcademyとOffice of Naval Research に感謝し、Surya Ganguli に資金を提供してくれた Office of Naval Research と Burroughs-Wellcome 財団、Sloan 財団、James S. McDonnell 財団に感謝する。
 
 ## A 条件付きエントロピー境界の導出
 
 逆軌跡のステップの条件付きエントロピー $H_q\left(X^{(t-1)}|X^{(t)}\right)$ は以下のようになる。
 
 $$\begin{align*}
-H_q\left(X^{(t-1)},X^{(t)}\right)&=H_q\left(X^{(t)},X^{(t-1)}\right)\tag{25}\\
-H_q\left(X^{(t-1)}|X^{(t)}\right)+H_q\left(X^{(t)}\right)&=H_q\left(X^{(t)}|X^{(t-1)}\right)+H_q\left(X^{(t-1)}\right)\tag{26}\\
-H_q\left(X^{(t-1)}|X^{(t)}\right)&=H_q\left(X^{(t)}|X^{(t-1)}\right)+H_q\left(X^{(t-1)}\right)-H_q(X^{(t)})\\
+  H_q\left(X^{(t-1)},X^{(t)}\right)&=H_q\left(X^{(t)},X^{(t-1)}\right)\tag{25}\\
+  H_q\left(X^{(t-1)}|X^{(t)}\right)+H_q\left(X^{(t)}\right)&=H_q\left(X^{(t)}|X^{(t-1)}\right)+H_q\left(X^{(t-1)}\right)\tag{26}\\
+  H_q\left(X^{(t-1)}|X^{(t)}\right)&=H_q\left(X^{(t)}|X^{(t-1)}\right)+H_q\left(X^{(t-1)}\right)-H_q(X^{(t)})\tag{27}\\
 \end{align*}$$
 
 エントロピー変化の上限は、$\pi(y)$ が最大エントロピー分布であることを観察することで構築できる。これは、二項分布の場合は無条件で成立し、ガウスの場合は分散 $1$ の訓練データで成立する。ガウシアンの場合、以下の等式が成り立つためには、訓練データは単位ノルムになるようにスケーリングされなければならない。白色化する必要はない。上限は次のように導かれる。
 
 $$\begin{align*}
-H_q\left(X^{(t)}\right)\geq&H_q\left(X^{(t-1)}\right)\tag{28}\\
-H_q\left(X^{(t-1)}\right)-H_q\left(X^{(t)}\right)\leq&0\tag{29}\\
-H_q\left(X^{(t-1)}|X^{(t)}\right)\leq&H_q\left(X^{(t)}|X^{(t-1)}\right)\\
+  H_q\left(X^{(t)}\right)\geq&H_q\left(X^{(t-1)}\right)\tag{28}\\
+  H_q\left(X^{(t-1)}\right)-H_q\left(X^{(t)}\right)\leq&0\tag{29}\\
+  H_q\left(X^{(t-1)}|X^{(t)}\right)\leq&H_q\left(X^{(t)}|X^{(t-1)}\right)\tag{30}\\
 \end{align*}$$
 
 エントロピーの差の下界は、マルコフ連鎖のステップを増やしても、その連鎖の初期状態について利用可能な情報は増えないので、初期状態の条件付きエントロピーは減らないことを観察することで確立できる。
 
 $$\begin{align*}
-H_q\left(X^{(0)}|X^{(t)}\right)\geq&H_q\left(X^{(0)}|X^{(t-1)}\right)\tag{31}\\
-H_q\left(X^{(t-1)}\right)-H_q\left(X^{(t)}\right)\geq&H_q\left(X^{(0)}|X^{(t-1)}\right)+H_q\left(X^{(t-1)}\right)-H_q\left(X^{(0)}|X^{(t)}\right)-H_q\left(X^{(t)}\right)\tag{32}\\
-H_q\left(X^{(t-1)}\right)-H_q\left(X^{(t)}\right)\geq&H_q\left(X^{(0)},X^{(t-1)}\right)-H_q\left(X^{(0)},X^{(t)}\right)\tag{33}\\
-H_q\left(X^{(t-1)}\right)-H_q\left(X^{(t)}\right)\geq&H_q\left(X^{(t-1)}|X^{(0)}\right)-H_q\left(X^{(t)}|X^{(0)}\right)\tag{34}\\
-H_q\left(X^{(t-1)}|X^{(t)}\right)\geq&H_q\left(X^{(t)}|X^{(t-1)}\right)+H_q\left(X^{(t-1)}|X^{(0)}\right)-H_q\left(X^{(t)}|X^{(0)}\right)\\
+  H_q\left(X^{(0)}|X^{(t)}\right)\geq&H_q\left(X^{(0)}|X^{(t-1)}\right)\tag{31}\\
+  H_q\left(X^{(t-1)}\right)-H_q\left(X^{(t)}\right)\geq&H_q\left(X^{(0)}|X^{(t-1)}\right)+H_q\left(X^{(t-1)}\right)-H_q\left(X^{(0)}|X^{(t)}\right)-H_q\left(X^{(t)}\right)\tag{32}\\
+  H_q\left(X^{(t-1)}\right)-H_q\left(X^{(t)}\right)\geq&H_q\left(X^{(0)},X^{(t-1)}\right)-H_q\left(X^{(0)},X^{(t)}\right)\tag{33}\\
+  H_q\left(X^{(t-1)}\right)-H_q\left(X^{(t)}\right)\geq&H_q\left(X^{(t-1)}|X^{(0)}\right)-H_q\left(X^{(t)}|X^{(0)}\right)\tag{34}\\
+  H_q\left(X^{(t-1)}|X^{(t)}\right)\geq&H_q\left(X^{(t)}|X^{(t-1)}\right)+H_q\left(X^{(t-1)}|X^{(0)}\right)-H_q\left(X^{(t)}|X^{(0)}\right)\tag{35}\\
 \end{align*}$$
 
 これらの式を組み合わせることで、1ステップの条件付きエントロピー
 
-$$H_q\left(X^{(t)}|X^{(t-1)}\right)\geq H_q\left(X^{(t-1)}X^{(t)}\right)\geq H_q\left(X^{(t)}|X^{(t-1)}\right)+H_q\left(X^{(t-1)}|X^{(0)}\right)-H_q\left(X^{(t)}|X^{(0)}\right)$$
+$$H_q\left(X^{(t)}|X^{(t-1)}\right)\geq H_q\left(X^{(t-1)}X^{(t)}\right)\geq H_q\left(X^{(t)}|X^{(t-1)}\right)+H_q\left(X^{(t-1)}|X^{(0)}\right)-H_q\left(X^{(t)}|X^{(0)}\right)\tag{36}$$
 
 を束縛することができる。上界も下界も条件付き前進軌道 $q\left(x^{(1\cdots T)}|x^{(0)}\right)$ にのみ依存し、解析的に計算することができる。
 
@@ -488,7 +491,7 @@ $$\begin{align*}
 \mu_i=&\left(x_i-z^\mu_i\right)\left(1-\Sigma_{ii}\right)+z^\mu_i\tag{63}\\
 \end{align*}$$
 
-ここで、$\Sigma$ と $\mu$ の両方は、順拡散カーネル $T_\pi(x^{(t)}|x^{(t-1)};\beta_t)$ の周りの摂動としてパラメータ化され、$z^\mu_i$ は、$p(x^{(t-1)}|x^{(t)})$ を何度も適用した結果として生じる平衡分布の平均である。$\Sigma$ は対角行列に制限される。
+ここで、$\Sigma$ と $\mu$ の両方は、順拡散カーネル $T_\pi\left(x^{(t)}|x^{(t-1)};\beta_t\right)$ の周りの摂動としてパラメータ化され、$z^\mu_i$ は、$p\left(x^{(t-1)}|x^{(t)}\right)$ を何度も適用した結果として生じる平衡分布の平均である。$\Sigma$ は対角行列に制限される。
 
 ##### マルチスケール畳み込み
 
