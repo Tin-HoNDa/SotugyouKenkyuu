@@ -44,9 +44,11 @@ def image_inception_score(globfile):
         xs = x if xs is None else np.concatenate([xs, x], axis=0)
     return inception_score(xs, resize_do_nothing)
 
-models = ["1-ToonYou", "2-Lyriel", "3-RcnzCartoon", "4-MajicMix", "5-RealisticVision", "7-FilmVelvia", "8-GhibliBackground"]
+models = ["1-ToonYou", "2-Lyriel", "3-RcnzCartoon", "4-MajicMix", "5-RealisticVision", "6-Tusun", "7-FilmVelvia", "8-GhibliBackground"]
 
+# for Imodel in models:
+#     for pic in range(4):
+#         print("Inception score ({}, {})".format(Imodel, pic), image_inception_score("splitted/{}/{}-*.gif".format(Imodel,pic)))
 
 for Imodel in models:
-    for pic in range(4):
-        print("Inception score ({}, {})".format(Imodel, pic), image_inception_score("splitted/{}/{}-*.gif".format(Imodel,pic)))
+    print("Inception score ({})".format(Imodel), image_inception_score("AnimateDiff/AnimateDiff/samples/{}/sample/*.gif".format(Imodel)))

@@ -1,0 +1,72 @@
+- dreambooth_path: models/DreamBooth_LoRA/majicmixRealistic_v5Preview.safetensors
+  lora_model_path: ''
+  inference_config: configs/inference/inference-v1.yaml
+  motion_module: models/Motion_Module/mm_sd_v14.ckpt
+  seed:
+  - 1572448948722921032
+  - 1099474677988590681
+  - 6488833139725635347
+  - 18339859844376517918
+  steps: 25
+  guidance_scale: 8
+  prompt:
+  - A group of two artists collaborate on a painting, each adding their own unique
+    touch to the canvas.
+  - A van gogh painting ofA tennis racket underneath a traffic light.
+  - Macro len style, A tiny mouse in a dainty dress holds a parasol to shield from
+    the sun.
+  - With the style of Vincent Van Gogh, blue apples on a tree with yellow leaves
+  n_prompt:
+  - ng_deepnegative_v1_75t, badhandv4, worst quality, low quality, normal quality,
+    lowres, bad anatomy, bad hands, watermark, moles
+  - nsfw, ng_deepnegative_v1_75t,badhandv4, worst quality, low quality, normal quality,
+    lowres,watermark, monochrome
+  - nsfw, ng_deepnegative_v1_75t,badhandv4, worst quality, low quality, normal quality,
+    lowres,watermark, monochrome
+  - nude, nsfw, ng_deepnegative_v1_75t, badhandv4, worst quality, low quality, normal
+    quality, lowres, bad anatomy, bad hands, monochrome, grayscale watermark, moles,
+    people
+  W: 512
+  H: 512
+  L: 16
+  random_seed:
+  - 1572448948722921032
+  - 1099474677988590681
+  - 6488833139725635347
+  - 18339859844376517918
+- dreambooth_path: models/DreamBooth_LoRA/majicmixRealistic_v5Preview.safetensors
+  lora_model_path: ''
+  inference_config: configs/inference/inference-v1.yaml
+  motion_module: models/Motion_Module/mm_sd_v15.ckpt
+  seed:
+  - 1572448948722921032
+  - 1099474677988590681
+  - 6488833139725635347
+  - 18339859844376517918
+  steps: 25
+  guidance_scale: 8
+  prompt:
+  - A group of two artists collaborate on a painting, each adding their own unique
+    touch to the canvas.
+  - A van gogh painting ofA tennis racket underneath a traffic light.
+  - Macro len style, A tiny mouse in a dainty dress holds a parasol to shield from
+    the sun.
+  - With the style of Vincent Van Gogh, blue apples on a tree with yellow leaves
+  n_prompt:
+  - ng_deepnegative_v1_75t, badhandv4, worst quality, low quality, normal quality,
+    lowres, bad anatomy, bad hands, watermark, moles
+  - nsfw, ng_deepnegative_v1_75t,badhandv4, worst quality, low quality, normal quality,
+    lowres,watermark, monochrome
+  - nsfw, ng_deepnegative_v1_75t,badhandv4, worst quality, low quality, normal quality,
+    lowres,watermark, monochrome
+  - nude, nsfw, ng_deepnegative_v1_75t, badhandv4, worst quality, low quality, normal
+    quality, lowres, bad anatomy, bad hands, monochrome, grayscale watermark, moles,
+    people
+  W: 512
+  H: 512
+  L: 16
+  random_seed:
+  - 1572448948722921032
+  - 1099474677988590681
+  - 6488833139725635347
+  - 18339859844376517918

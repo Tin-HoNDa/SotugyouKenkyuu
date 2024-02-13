@@ -1,0 +1,92 @@
+- dreambooth_path: models/DreamBooth_LoRA/realisticVisionV20_v20.safetensors
+  lora_model_path: ''
+  inference_config: configs/inference/inference-v1.yaml
+  motion_module: models/Motion_Module/mm_sd_v14.ckpt
+  seed:
+  - 5658137986800322009
+  - 12099779162349365895
+  - 10499524853910852697
+  - 16768009035333711932
+  steps: 25
+  guidance_scale: 8
+  prompt:
+  - still camera, A van parked on grass
+  - A beautiful mosque stands tall in the city center.
+  - Two bell peppers together on table.
+  - A drone flies over a vast ocean, capturing footage of whales and dolphins swimming
+    below.
+  n_prompt:
+  - semi-realistic, cgi, 3d, render, sketch, cartoon, drawing, anime, text, close
+    up, cropped, out of frame, worst quality, low quality, jpeg artifacts, ugly, duplicate,
+    morbid, mutilated, extra fingers, mutated hands, poorly drawn hands, poorly drawn
+    face, mutation, deformed, blurry, dehydrated, bad anatomy, bad proportions, extra
+    limbs, cloned face, disfigured, gross proportions, malformed limbs, missing arms,
+    missing legs, extra arms, extra legs, fused fingers, too many fingers, long neck
+  - semi-realistic, cgi, 3d, render, sketch, cartoon, drawing, anime, text, close
+    up, cropped, out of frame, worst quality, low quality, jpeg artifacts, ugly, duplicate,
+    morbid, mutilated, extra fingers, mutated hands, poorly drawn hands, poorly drawn
+    face, mutation, deformed, blurry, dehydrated, bad anatomy, bad proportions, extra
+    limbs, cloned face, disfigured, gross proportions, malformed limbs, missing arms,
+    missing legs, extra arms, extra legs, fused fingers, too many fingers, long neck
+  - blur, haze, deformed iris, deformed pupils, semi-realistic, cgi, 3d, render, sketch,
+    cartoon, drawing, anime, mutated hands and fingers, deformed, distorted, disfigured,
+    poorly drawn, bad anatomy, wrong anatomy, extra limb, missing limb, floating limbs,
+    disconnected limbs, mutation, mutated, ugly, disgusting, amputation
+  - blur, haze, deformed iris, deformed pupils, semi-realistic, cgi, 3d, render, sketch,
+    cartoon, drawing, anime, art, mutated hands and fingers, deformed, distorted,
+    disfigured, poorly drawn, bad anatomy, wrong anatomy, extra limb, missing limb,
+    floating limbs, disconnected limbs, mutation, mutated, ugly, disgusting, amputation
+  W: 512
+  H: 512
+  L: 16
+  random_seed:
+  - 5658137986800322009
+  - 12099779162349365895
+  - 10499524853910852697
+  - 16768009035333711932
+- dreambooth_path: models/DreamBooth_LoRA/realisticVisionV20_v20.safetensors
+  lora_model_path: ''
+  inference_config: configs/inference/inference-v1.yaml
+  motion_module: models/Motion_Module/mm_sd_v15.ckpt
+  seed:
+  - 5658137986800322009
+  - 12099779162349365895
+  - 10499524853910852697
+  - 16768009035333711932
+  steps: 25
+  guidance_scale: 8
+  prompt:
+  - still camera, A van parked on grass
+  - A beautiful mosque stands tall in the city center.
+  - Two bell peppers together on table.
+  - A drone flies over a vast ocean, capturing footage of whales and dolphins swimming
+    below.
+  n_prompt:
+  - semi-realistic, cgi, 3d, render, sketch, cartoon, drawing, anime, text, close
+    up, cropped, out of frame, worst quality, low quality, jpeg artifacts, ugly, duplicate,
+    morbid, mutilated, extra fingers, mutated hands, poorly drawn hands, poorly drawn
+    face, mutation, deformed, blurry, dehydrated, bad anatomy, bad proportions, extra
+    limbs, cloned face, disfigured, gross proportions, malformed limbs, missing arms,
+    missing legs, extra arms, extra legs, fused fingers, too many fingers, long neck
+  - semi-realistic, cgi, 3d, render, sketch, cartoon, drawing, anime, text, close
+    up, cropped, out of frame, worst quality, low quality, jpeg artifacts, ugly, duplicate,
+    morbid, mutilated, extra fingers, mutated hands, poorly drawn hands, poorly drawn
+    face, mutation, deformed, blurry, dehydrated, bad anatomy, bad proportions, extra
+    limbs, cloned face, disfigured, gross proportions, malformed limbs, missing arms,
+    missing legs, extra arms, extra legs, fused fingers, too many fingers, long neck
+  - blur, haze, deformed iris, deformed pupils, semi-realistic, cgi, 3d, render, sketch,
+    cartoon, drawing, anime, mutated hands and fingers, deformed, distorted, disfigured,
+    poorly drawn, bad anatomy, wrong anatomy, extra limb, missing limb, floating limbs,
+    disconnected limbs, mutation, mutated, ugly, disgusting, amputation
+  - blur, haze, deformed iris, deformed pupils, semi-realistic, cgi, 3d, render, sketch,
+    cartoon, drawing, anime, art, mutated hands and fingers, deformed, distorted,
+    disfigured, poorly drawn, bad anatomy, wrong anatomy, extra limb, missing limb,
+    floating limbs, disconnected limbs, mutation, mutated, ugly, disgusting, amputation
+  W: 512
+  H: 512
+  L: 16
+  random_seed:
+  - 5658137986800322009
+  - 12099779162349365895
+  - 10499524853910852697
+  - 16768009035333711932
