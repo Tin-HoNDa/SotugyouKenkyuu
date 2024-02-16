@@ -11,6 +11,7 @@ from transformers import VisionEncoderDecoderModel, AutoTokenizer, AutoModel
 import pandas as pd
 import gensim.models.keyedvectors as word2vec
 from scipy import spatial
+import matplotlib.pyplot as plt
 
 def min_max_normalization(l):
     #l_min = min(l)
@@ -53,9 +54,9 @@ def sentence_similarity(sentence_1, sentence_2):
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
 # load pretrained processor, tokenizer, and model
+model = VisionEncoderDecoderModel.from_pretrained("Neleac/timesformer-gpt2-video-captioning").to(device)
 image_processor = AutoImageProcessor.from_pretrained("MCG-NJU/videomae-base")
 tokenizer = AutoTokenizer.from_pretrained("gpt2")
-model = VisionEncoderDecoderModel.from_pretrained("Neleac/timesformer-gpt2-video-captioning").to(device)
 
 print("init")
 
@@ -66,6 +67,9 @@ dir_prompts = "./アンケート/prompts/"
 video_paths = [os.path.join(dir_videos, x) for x in os.listdir(dir_videos)]
 prompt_paths = [os.path.join(dir_prompts, x) for x in os.listdir(dir_prompts)]
 
+for p in video_paths:
+    print(p)
+
 print("captioning will starts...")
 
 sequences = []
@@ -73,7 +77,6 @@ sequences = []
 for i in tqdm(range(len(video_paths))):
     container = av.open(video_paths[i])
 
-    # extract evenly spaced frames from video
     seg_len = container.streams.video[0].frames
     clip_len = model.config.encoder.num_frames
     indices = set(np.linspace(0, seg_len, num=clip_len, endpoint=False).astype(np.int64))
@@ -83,7 +86,6 @@ for i in tqdm(range(len(video_paths))):
         if i in indices:
             frames.append(frame.to_ndarray(format="rgb24"))
 
-    # generate caption
     gen_kwargs = {
         "min_length": 10,
         "max_length": 20,
@@ -100,9 +102,9 @@ print("captioning finished.")
 #tokenizer = AutoTokenizer.from_pretrained('intfloat/multilingual-e5-base')
 #model = AutoModel.from_pretrained('intfloat/multilingual-e5-base')
 
-#model = SentenceTransformer('sentence-transformers/all-mpnet-base-v2')
-#tokenizer = AutoTokenizer.from_pretrained('sentence-transformers/all-mpnet-base-v2')
-#model = AutoModel.from_pretrained('sentence-transformers/all-mpnet-base-v2')
+model = SentenceTransformer('sentence-transformers/all-mpnet-base-v2')
+tokenizer = AutoTokenizer.from_pretrained('sentence-transformers/all-mpnet-base-v2')
+model = AutoModel.from_pretrained('sentence-transformers/all-mpnet-base-v2')
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 model.to(device)
@@ -111,34 +113,34 @@ print("comparing will starts...")
 
 outputs = []
 
-#for i in tqdm(range(len(video_paths))):
-#    prompt_path = prompt_paths[i]
-#    sequence = sequences[i]
-#
-#    sequence = 'query: ' + str(sequence)
-#    text = 'passage: ' + str(read_text_file(prompt_path))
-#
-#    input_texts = [sequence, sequence, text, text]
-#    batch_dict = tokenizer(input_texts, max_length=512, padding=True, truncation=True, return_tensors='pt')
-#    output = model(**batch_dict)
-#    embeddings = average_pool(output.last_hidden_state, batch_dict['attention_mask'])
-#    embeddings = F.normalize(embeddings, p=2, dim=1)
-#    scores = (embeddings[:2] @ embeddings[2:].T)
-#    output = scores[0][0]
-#    output = output.detach().numpy()
-#    outputs.append(output)
-
-model = load_model()
-
 for i in tqdm(range(len(video_paths))):
     prompt_path = prompt_paths[i]
     sequence = sequences[i]
 
-    text = str(read_text_file(prompt_path))
+    sequence = 'query: ' + str(sequence)
+    text = 'passage: ' + str(read_text_file(prompt_path))
 
-    score = sentence_similarity(sequence, text)
+    input_texts = [sequence, sequence, text, text]
+    batch_dict = tokenizer(input_texts, max_length=512, padding=True, truncation=True, return_tensors='pt')
+    output = model(**batch_dict)
+    embeddings = average_pool(output.last_hidden_state, batch_dict['attention_mask'])
+    embeddings = F.normalize(embeddings, p=2, dim=1)
+    scores = (embeddings[:2] @ embeddings[2:].T)
+    output = scores[0][0]
+    output = output.detach().numpy()
+    outputs.append(output)
 
-    outputs.append(score)
+#model = load_model()
+#
+#for i in tqdm(range(len(video_paths))):
+#    prompt_path = prompt_paths[i]
+#    sequence = sequences[i]
+#
+#    text = str(read_text_file(prompt_path))
+#
+#    score = sentence_similarity(sequence, text)
+#
+#    outputs.append(score)
 
 print("comparing finished.")
 
@@ -150,7 +152,7 @@ print(f"Final average score: {sum(outputs)/len(outputs)}, Total videos: {len(out
 csv = pd.read_csv("./Ground_Truth.csv")
 ground_score = []
 
-print("compare to text")
+print("compare to human evaluation")
 
 for i in range(len(prompt_paths)):
     index = 'q' + str(3 * i + 2)
@@ -164,7 +166,15 @@ S_ground_score = pd.Series(ground_score)
 print(f"Spearman's : {S_scores.corr(S_ground_score, method='spearman')}")
 print(f"Kendall's : {S_scores.corr(S_ground_score, method='kendall')}")
 
-print("compare to general")
+plt.scatter(ground_score, outputs)
+plt.xlabel("Ground-truth")
+plt.ylabel("Our method")
+plt.plot(ground_score, np.poly1d(np.polyfit(ground_score, outputs, 1))(ground_score))
+plt.xlim(0, 1)
+plt.ylim(0, 1)
+plt.savefig("卒論/vid_corr.png")
+
+print("compare to general evaluation")
 
 ground_score = []
 
