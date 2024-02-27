@@ -1,0 +1,88 @@
+- dreambooth_path: models/DreamBooth_LoRA/majicmixRealistic_v4.safetensors
+  lora_model_path: models/DreamBooth_LoRA/FilmVelvia2.safetensors
+  lora_alpha: 0.6
+  inference_config: configs/inference/inference-v1.yaml
+  motion_module: models/Motion_Module/mm_sd_v14.ckpt
+  seed:
+  - 358675358833372813
+  - 3519455280971923743
+  - 11684545350557985081
+  - 8696855302100399877
+  steps: 25
+  guidance_scale: 8
+  prompt:
+  - Three cows graze in a green pasture while a farmer repairs his tractor nearby.
+  - Valkyrie riding flying horses through the clouds
+  - Darth Vader watches as the sea becomes calm once again.
+  - 'two motorcycles facing each other, Macro len style '
+  n_prompt:
+  - cartoon, anime, sketches,worst quality, low quality, deformed, distorted, disfigured,
+    bad eyes, wrong lips, weird mouth, bad teeth, mutated hands and fingers, bad anatomy,
+    wrong anatomy, amputation, extra limb, missing limb, floating limbs, disconnected
+    limbs, mutation, ugly, disgusting, bad_pictures, negative_hand-neg
+  - cartoon, anime, sketches,worst quality, low quality, deformed, distorted, disfigured,
+    bad eyes, wrong lips, weird mouth, bad teeth, mutated hands and fingers, bad anatomy,
+    wrong anatomy, amputation, extra limb, missing limb, floating limbs, disconnected
+    limbs, mutation, ugly, disgusting, bad_pictures, negative_hand-neg
+  - wrong white balance, dark, cartoon, anime, sketches,worst quality, low quality,
+    deformed, distorted, disfigured, bad eyes, wrong lips, weird mouth, bad teeth,
+    mutated hands and fingers, bad anatomy, wrong anatomy, amputation, extra limb,
+    missing limb, floating limbs, disconnected limbs, mutation, ugly, disgusting,
+    bad_pictures, negative_hand-neg
+  - wrong white balance, dark, cartoon, anime, sketches,worst quality, low quality,
+    deformed, distorted, disfigured, bad eyes, wrong lips, weird mouth, bad teeth,
+    mutated hands and fingers, bad anatomy, wrong anatomy, amputation, extra limb,
+    missing limb, floating limbs, disconnected limbs, mutation, ugly, disgusting,
+    bad_pictures, negative_hand-neg
+  W: 512
+  H: 512
+  L: 16
+  random_seed:
+  - 358675358833372813
+  - 3519455280971923743
+  - 11684545350557985081
+  - 8696855302100399877
+- dreambooth_path: models/DreamBooth_LoRA/majicmixRealistic_v4.safetensors
+  lora_model_path: models/DreamBooth_LoRA/FilmVelvia2.safetensors
+  lora_alpha: 0.6
+  inference_config: configs/inference/inference-v1.yaml
+  motion_module: models/Motion_Module/mm_sd_v15.ckpt
+  seed:
+  - 358675358833372813
+  - 3519455280971923743
+  - 11684545350557985081
+  - 8696855302100399877
+  steps: 25
+  guidance_scale: 8
+  prompt:
+  - Three cows graze in a green pasture while a farmer repairs his tractor nearby.
+  - Valkyrie riding flying horses through the clouds
+  - Darth Vader watches as the sea becomes calm once again.
+  - 'two motorcycles facing each other, Macro len style '
+  n_prompt:
+  - cartoon, anime, sketches,worst quality, low quality, deformed, distorted, disfigured,
+    bad eyes, wrong lips, weird mouth, bad teeth, mutated hands and fingers, bad anatomy,
+    wrong anatomy, amputation, extra limb, missing limb, floating limbs, disconnected
+    limbs, mutation, ugly, disgusting, bad_pictures, negative_hand-neg
+  - cartoon, anime, sketches,worst quality, low quality, deformed, distorted, disfigured,
+    bad eyes, wrong lips, weird mouth, bad teeth, mutated hands and fingers, bad anatomy,
+    wrong anatomy, amputation, extra limb, missing limb, floating limbs, disconnected
+    limbs, mutation, ugly, disgusting, bad_pictures, negative_hand-neg
+  - wrong white balance, dark, cartoon, anime, sketches,worst quality, low quality,
+    deformed, distorted, disfigured, bad eyes, wrong lips, weird mouth, bad teeth,
+    mutated hands and fingers, bad anatomy, wrong anatomy, amputation, extra limb,
+    missing limb, floating limbs, disconnected limbs, mutation, ugly, disgusting,
+    bad_pictures, negative_hand-neg
+  - wrong white balance, dark, cartoon, anime, sketches,worst quality, low quality,
+    deformed, distorted, disfigured, bad eyes, wrong lips, weird mouth, bad teeth,
+    mutated hands and fingers, bad anatomy, wrong anatomy, amputation, extra limb,
+    missing limb, floating limbs, disconnected limbs, mutation, ugly, disgusting,
+    bad_pictures, negative_hand-neg
+  W: 512
+  H: 512
+  L: 16
+  random_seed:
+  - 358675358833372813
+  - 3519455280971923743
+  - 11684545350557985081
+  - 8696855302100399877

@@ -1,0 +1,64 @@
+- dreambooth_path: models/DreamBooth_LoRA/moonfilm_reality20.safetensors
+  lora_model_path: models/DreamBooth_LoRA/TUSUN.safetensors
+  lora_alpha: 0.6
+  inference_config: configs/inference/inference-v1.yaml
+  motion_module: models/Motion_Module/mm_sd_v14.ckpt
+  seed:
+  - 10154078483724687116
+  - 2664393535095473805
+  - 4231566096207622938
+  - 1713349740448094493
+  steps: 25
+  guidance_scale: 8
+  prompt:
+  - The scene starts with a shot of the Forbidden City in Beijing. The sun is setting,
+    giving the sky a warm orange hue. The camera slowly pans out to show the bustling
+    city below.
+  - A Egyptian tomp hieroglyphics painting ofA regal lion, decked out in a jeweled
+    crown, surveys his kingdom.
+  - A young woman with glasses is jogging in the park wearing a pink headband.
+  - Johnny Depp's smoldering gaze pierces the camera, his chiseled features striking.
+  n_prompt:
+  - worst quality, low quality, deformed, distorted, disfigured, bad eyes, bad anatomy,
+    disconnected limbs, wrong body proportions, low quality, worst quality, text,
+    watermark, signatre, logo, illustration, painting, cartoons, ugly, easy_negative
+  W: 512
+  H: 512
+  L: 16
+  random_seed:
+  - 10154078483724687116
+  - 2664393535095473805
+  - 4231566096207622938
+  - 1713349740448094493
+- dreambooth_path: models/DreamBooth_LoRA/moonfilm_reality20.safetensors
+  lora_model_path: models/DreamBooth_LoRA/TUSUN.safetensors
+  lora_alpha: 0.6
+  inference_config: configs/inference/inference-v1.yaml
+  motion_module: models/Motion_Module/mm_sd_v15.ckpt
+  seed:
+  - 10154078483724687116
+  - 2664393535095473805
+  - 4231566096207622938
+  - 1713349740448094493
+  steps: 25
+  guidance_scale: 8
+  prompt:
+  - The scene starts with a shot of the Forbidden City in Beijing. The sun is setting,
+    giving the sky a warm orange hue. The camera slowly pans out to show the bustling
+    city below.
+  - A Egyptian tomp hieroglyphics painting ofA regal lion, decked out in a jeweled
+    crown, surveys his kingdom.
+  - A young woman with glasses is jogging in the park wearing a pink headband.
+  - Johnny Depp's smoldering gaze pierces the camera, his chiseled features striking.
+  n_prompt:
+  - worst quality, low quality, deformed, distorted, disfigured, bad eyes, bad anatomy,
+    disconnected limbs, wrong body proportions, low quality, worst quality, text,
+    watermark, signatre, logo, illustration, painting, cartoons, ugly, easy_negative
+  W: 512
+  H: 512
+  L: 16
+  random_seed:
+  - 10154078483724687116
+  - 2664393535095473805
+  - 4231566096207622938
+  - 1713349740448094493
