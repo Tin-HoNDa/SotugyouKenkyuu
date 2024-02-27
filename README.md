@@ -10,6 +10,13 @@
 
 ### スコア計測
 
+```yaml
+Python=3.10
+torch=1.13.1
+transformers=4.30.2
+```
+後は何でもいいと思う
+
 言語埋込モデルの変更などはコメントアウトをいい感じにつけたり外したりしてください．
 
 [TimeSformer-GPT2](https://huggingface.co/Neleac/timesformer-gpt2-video-captioning) を使用する場合：
@@ -24,7 +31,7 @@ python "V2S_TimeSformer-GPT2%20Video%20Captioning.py"
 python V2S_vit-gpt2-image-captioning.py
 ```
 
-CLIPScore を使う場合
+CLIPScore を使う場合：
 
 ```bash
 python Clip_Score.py
