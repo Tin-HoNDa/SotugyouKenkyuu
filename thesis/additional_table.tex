@@ -1,0 +1,74 @@
+\begin{landscape}
+    \begin{table}
+        \centering
+        \caption{\textbf{動画像に対するキャプションとその評価の平均・標準偏差（抜粋）}}
+        \begin{tabular}{r|r|c|c|c|c}
+            \multicolumn{2}{r|}{\scriptsize{動画像のサムネイル}} & 
+                \begin{minipage}{20mm}\centering\scalebox{0.1}{\includegraphics{IMAGE/1-1-1.eps}}\end{minipage} &
+                \begin{minipage}{20mm}\centering\scalebox{0.1}{\includegraphics{IMAGE/1-2-1.eps}}\end{minipage} &
+                \begin{minipage}{20mm}\centering\scalebox{0.1}{\includegraphics{IMAGE/1-3-1.eps}}\end{minipage} &
+                \begin{minipage}{20mm}\centering\scalebox{0.1}{\includegraphics{IMAGE/1-4-1.eps}}\end{minipage} \\\hline
+            \multicolumn{2}{r|}{\scriptsize{プロンプト}} &
+                \scriptsize{\begin{tabular}{c} In 3d game style, Salvador\\Dali with a robotic half face\end{tabular}} &
+                \scriptsize{\begin{tabular}{c} unicorn sliding\\on a rainbow \end{tabular}} &
+                \scriptsize{\begin{tabular}{c} A big Ferris wheel is rotating\\in an amusement park. \end{tabular}} &
+                \scriptsize{\begin{tabular}{c} With the style of oil\\painting, a close-up of\\a bloody mary cocktail \end{tabular}}\\ \hline
+            \multirow{2}{*}{\scriptsize{\begin{tabular}{r} ViT+GPT2\\画像(最低)\\\&E5 \end{tabular} } } & \tiny{キャプション} &
+                \scriptsize{\begin{tabular}{c} a woman wearing a clown mask\\and holding a cell phone\end{tabular}} &
+                \scriptsize{\begin{tabular}{c} a horse statue on\\the side of a road \end{tabular}} &
+                \scriptsize{\begin{tabular}{c} a red and white water fountain\\with a red and white clock on it\end{tabular}} &
+                \scriptsize{\begin{tabular}{c} a woman with red\\hair and red eyes\end{tabular}}\\ \cline{2-6}
+            & \scriptsize{評価} &
+                1.375 $\pm$ 0.7440 &
+                2.500 $\pm$ 1.0690 &
+                1.250 $\pm$ 0.4629 &
+                5.000 $\pm$ 0.0000 \\ \hline
+            \multirow{2}{*}{\scriptsize{\begin{tabular}{r} TSF\\+GPT2\\\&BERT \end{tabular} } } & \tiny {キャプション} &
+                \scriptsize{\begin{tabular}{c} A person is drawing a character\\in a cartoon character \end{tabular}} &
+                \scriptsize{\begin{tabular}{c} A person wearing a helmet is\\skating on a snowy surface. \end{tabular}} &
+                \scriptsize{\begin{tabular}{c} A group of people are in\\a gym and one of them\\swings a ball up and down. \end{tabular}} &
+                \scriptsize{\begin{tabular}{c} A person is coloring in a picture\\of a cartoon character.\end{tabular}}\\\cline{2-6}
+            & \scriptsize{評価} &
+                1.5000 $\pm$ 1.0690 &
+                1.3750 $\pm$ 0.7440 &
+                1.0000 $\pm$ 0.0000 &
+                1.3750 $\pm$ 0.7440
+        \end{tabular}
+    \end{table}
+    \begin{table}
+        \centering
+        \begin{tabular}{r|r|c|c|c|c}
+            \multicolumn{2}{r|}{\scriptsize{動画像のサムネイル}} & 
+                \begin{minipage}{20mm}\centering\scalebox{0.1}{\includegraphics{IMAGE/2-1-1.eps}}\end{minipage} &
+                \begin{minipage}{20mm}\centering\scalebox{0.1}{\includegraphics{IMAGE/2-2-1.eps}}\end{minipage} &
+                \begin{minipage}{20mm}\centering\scalebox{0.1}{\includegraphics{IMAGE/2-3-1.eps}}\end{minipage} &
+                \begin{minipage}{20mm}\centering\scalebox{0.1}{\includegraphics{IMAGE/2-4-1.eps}}\end{minipage} \\\hline
+            \multicolumn{2}{r|}{\scriptsize{プロンプト}} &
+                \scriptsize{\begin{tabular}{c} 3 sheep enjoying\\spaghetti together\end{tabular}} &
+                \scriptsize{\begin{tabular}{c} Two white swans gracefully\\swam in the serene lake \end{tabular}} &
+                \scriptsize{\begin{tabular}{c} a moose with the\\style of Hokusai \end{tabular}} &
+                \scriptsize{\begin{tabular}{c} Angelina Jolie's full lips\\curve into a smile, her gaze\\intense and captivating.\end{tabular}}\\ \hline
+            \multirow{2}{*}{\scriptsize{\begin{tabular}{r} ViT+GPT2\\画像(最低)\\\&E5 \end{tabular} } } & \tiny{キャプション} &
+                \scriptsize{\begin{tabular}{c} a herd of sheep standing\\on top of a dirt field\end{tabular}} &
+                \scriptsize{\begin{tabular}{c} three swans are swimming in\\the water near a body of water\end{tabular}} &
+                \scriptsize{\begin{tabular}{c} a statue of a man\\and a horse on a beach\end{tabular}} &
+                \scriptsize{\begin{tabular}{c} a beautiful young woman in a\\pink dress posing for a picture\end{tabular}}\\ \cline{2-6}
+            & \scriptsize{評価} &
+                4.2500 $\pm$ 1.4880 &
+                3.2500 $\pm$ 1.0351 &
+                2.0000 $\pm$ 1.4142 &
+                2.2500 $\pm$ 0.7071 \\ \hline
+            \multirow{2}{*}{\scriptsize{\begin{tabular}{r} TSF\\+GPT2\\\&BERT \end{tabular} } } & \tiny {キャプション} &
+                \scriptsize{\begin{tabular}{c} A man is standing in\\front of a flock of sheep\\and he is feeding them.\end{tabular}} &
+                \scriptsize{\begin{tabular}{c} A woman is showing how to\\make a fish out of a piece of bread.\end{tabular}} &
+                \scriptsize{\begin{tabular}{c} A man and woman are standing\\in front of a painting of a horse.\end{tabular}} &
+                \scriptsize{\begin{tabular}{c} A woman is looking at the\\camera and talking to the camera.\end{tabular}}\\\cline{2-6}
+            & \scriptsize{評価} &
+                2.0000 $\pm$ 0.9258 &
+                1.1250 $\pm$ 0.3536 &
+                1.2500 $\pm$ 0.4629 &
+                3.1250 $\pm$ 0.8345
+        \end{tabular}
+        \label{tab:additional_enquete_score}
+    \end{table}
+\end{landscape}

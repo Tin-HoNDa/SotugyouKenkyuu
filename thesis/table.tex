@@ -1,0 +1,94 @@
+\begin{landscape}
+    \begin{table}
+        \centering
+        \caption{\textbf{各モデルのキャプションとスコア }（抜粋）}
+        \begin{tabular}{r|r|c|c|c|c}
+            \multicolumn{2}{r|}{\scriptsize{動画像のサムネイル}} & 
+                \begin{minipage}{20mm}\centering\scalebox{0.1}{\includegraphics{IMAGE/1-1-1.eps}}\end{minipage} &
+                \begin{minipage}{20mm}\centering\scalebox{0.1}{\includegraphics{IMAGE/1-2-1.eps}}\end{minipage} &
+                \begin{minipage}{20mm}\centering\scalebox{0.1}{\includegraphics{IMAGE/1-3-1.eps}}\end{minipage} &
+                \begin{minipage}{20mm}\centering\scalebox{0.1}{\includegraphics{IMAGE/1-4-1.eps}}\end{minipage} \\\hline
+            \multicolumn{2}{r|}{\scriptsize{プロンプト}} &
+                \scriptsize{\begin{tabular}{c} In 3d game style, Salvador\\Dali with a robotic half face\end{tabular}} &
+                \scriptsize{\begin{tabular}{c} unicorn sliding\\on a rainbow \end{tabular}} &
+                \scriptsize{\begin{tabular}{c} A big Ferris wheel is rotating\\in an amusement park. \end{tabular}} &
+                \scriptsize{\begin{tabular}{c} With the style of oil\\painting, a close-up of\\a bloody mary cocktail \end{tabular}}\\ \hline
+            \multirow{2}{*}{\scriptsize{\begin{tabular}{r} ViT+GPT2\\画像（最低）\\ \& E5 \end{tabular} } } & \tiny{キャプション} &
+                \scriptsize{\begin{tabular}{c} a woman wearing a clown mask\\and holding a cell phone\end{tabular}} &
+                \scriptsize{\begin{tabular}{c} a horse statue on\\the side of a road \end{tabular}} &
+                \scriptsize{\begin{tabular}{c} a red and white water fountain\\with a red and white clock on it\end{tabular}} &
+                \scriptsize{\begin{tabular}{c} a woman with red\\hair and red eyes\end{tabular}}\\ \cline{2-6}
+            & \scriptsize{スコア} &
+                0.7296 &
+                0.7225 &
+                0.7212 &
+                0.7754 \\ \hline
+            \multirow{2}{*}{\scriptsize{\begin{tabular}{r} TSF+GPT2 \\ \& BERT \end{tabular} } } & \tiny {キャプション} &
+                \scriptsize{\begin{tabular}{c} A person is drawing a character\\in a cartoon character \end{tabular}} &
+                \scriptsize{\begin{tabular}{c} A person wearing a helmet is\\skating on a snowy surface. \end{tabular}} &
+                \scriptsize{\begin{tabular}{c} A group of people are in\\a gym and one of them\\swings a ball up and down. \end{tabular}} &
+                \scriptsize{\begin{tabular}{c} A person is coloring in a picture\\of a cartoon character.\end{tabular}}\\\cline{2-6}
+            & \scriptsize{スコア} &
+                0.3452 &
+                0.1422 &
+                0.2535 &
+                0.3546 \\ \hline
+            \multicolumn{2}{r|}{\scriptsize{CLIPScore}} &
+                0.2673 &
+                0.2388 &
+                0.1998 &
+                0.2120 \\ \hline
+            \multicolumn{2}{r|}{\scriptsize{人間の評価}} &
+                0.3333 &
+                0.5119 &
+                0.7738 &
+                0.2619
+        \end{tabular}
+    \end{table}
+    \begin{table}
+        \centering
+        \begin{tabular}{r|r|c|c|c|c}
+            \multicolumn{2}{r|}{\scriptsize{動画像のサムネイル}} & 
+                \begin{minipage}{20mm}\centering\scalebox{0.1}{\includegraphics{IMAGE/2-1-1.eps}}\end{minipage} &
+                \begin{minipage}{20mm}\centering\scalebox{0.1}{\includegraphics{IMAGE/2-2-1.eps}}\end{minipage} &
+                \begin{minipage}{20mm}\centering\scalebox{0.1}{\includegraphics{IMAGE/2-3-1.eps}}\end{minipage} &
+                \begin{minipage}{20mm}\centering\scalebox{0.1}{\includegraphics{IMAGE/2-4-1.eps}}\end{minipage} \\\hline
+            \multicolumn{2}{r|}{\scriptsize{プロンプト}} &
+                \scriptsize{\begin{tabular}{c} 3 sheep enjoying\\spaghetti together\end{tabular}} &
+                \scriptsize{\begin{tabular}{c} Two white swans gracefully\\swam in the serene lake \end{tabular}} &
+                \scriptsize{\begin{tabular}{c} a moose with the\\style of Hokusai \end{tabular}} &
+                \scriptsize{\begin{tabular}{c} Angelina Jolie's full lips\\curve into a smile, her gaze\\intense and captivating.\end{tabular}}\\ \hline
+            \multirow{2}{*}{\scriptsize{\begin{tabular}{r} ViT+GPT2\\画像（最低）\\ \& E5 \end{tabular} } } & \tiny{キャプション} &
+                \scriptsize{\begin{tabular}{c} a herd of sheep standing\\on top of a dirt field\end{tabular}} &
+                \scriptsize{\begin{tabular}{c} three swans are swimming in\\the water near a body of water\end{tabular}} &
+                \scriptsize{\begin{tabular}{c} a statue of a man\\and a horse on a beach\end{tabular}} &
+                \scriptsize{\begin{tabular}{c} a beautiful young woman in a\\pink dress posing for a picture\end{tabular}}\\ \cline{2-6}
+            & \scriptsize{スコア} &
+                0.7722 &
+                0.8653 &
+                0.7566 &
+                0.7356 \\ \hline
+            \multirow{2}{*}{\scriptsize{\begin{tabular}{r} TSF+GPT2 \\ \& BERT \end{tabular} } } & \tiny {キャプション} &
+                \scriptsize{\begin{tabular}{c} A man is standing in\\front of a flock of sheep\\and he is feeding them.\end{tabular}} &
+                \scriptsize{\begin{tabular}{c} A woman is showing how to\\make a fish out of a piece of bread.\end{tabular}} &
+                \scriptsize{\begin{tabular}{c} A man and woman are standing\\in front of a painting of a horse.\end{tabular}} &
+                \scriptsize{\begin{tabular}{c} A woman is looking at the\\camera and talking to the camera.\end{tabular}}\\\cline{2-6}
+            & \scriptsize{スコア} &
+                0.5830 &
+                0.1549 &
+                0.2060 &
+                0.3790 \\ \hline
+            \multicolumn{2}{r|}{\scriptsize{CLIPScore}} &
+                0.1932 &
+                0.1887 &
+                0.2342 &
+                0.1787 \\ \hline
+            \multicolumn{2}{r|}{\scriptsize{人間の評価}} &
+                0.7381 &
+                0.4048 &
+                0.7381 &
+                0.7857
+        \end{tabular}
+        \label{tab:score}
+    \end{table}
+\end{landscape}
